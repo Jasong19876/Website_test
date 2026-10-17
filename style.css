@@ -267,3 +267,36 @@ nav a { transition: color .2s ease, background .25s ease; }
 /* flooring section titles on home */
 .sec-title { margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -.5px; }
 .sec-text { margin: -4px 0 20px; color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 52ch; }
+
+/* real form controls */
+.flabel { display: block; font-size: 13px; font-weight: 600; color: var(--muted); margin-top: 6px; }
+input.field, select.field, textarea.field { width: 100%; padding: 0 16px; font: inherit; font-size: 15px; color: var(--text); background: #fff; outline: none; transition: border-color .2s ease, box-shadow .2s ease; }
+textarea.field { padding: 14px 16px; resize: vertical; min-height: 150px; }
+input.field:focus, select.field:focus, textarea.field:focus { border-color: var(--orange); box-shadow: 0 0 0 4px rgba(245,178,27,.22); }
+button.btn { font-family: inherit; cursor: pointer; }
+button.btn:disabled { opacity: .6; cursor: wait; }
+.form-status { margin-top: 14px; font-size: 14px; min-height: 20px; }
+.form-status.ok { color: #1f7a3d; }
+.form-status.err { color: var(--red); }
+
+/* flooring feature list */
+.feat-specs { border-top: 1px solid var(--border); margin: 22px 0 18px; }
+.feat-specs .r { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.feat-specs .r span:first-child { color: var(--muted); }
+.feat-specs .r span:last-child { font-weight: 600; text-align: right; }
+.badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+.badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: var(--tint); border: 1px solid #f0dfb6; font-size: 13px; font-weight: 600; }
+.badge::before { content: "\2713"; display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: var(--grad); font-size: 11px; color: #17171a; }
+
+/* location address */
+.addr { font-size: 15px; line-height: 1.6; margin: 10px 0 4px; font-weight: 500; }
+.addr a { text-decoration: none; }
+.addr a:hover { color: var(--orange-deep); }
+
+/* real map */
+.mapwrap { border-radius: var(--r); overflow: hidden; border: 1px solid var(--border); min-height: 340px; background: var(--tint); }
+.mapwrap iframe { display: block; width: 100%; height: 100%; min-height: 340px; border: 0; }
+.mapwrap.tall, .mapwrap.tall iframe { min-height: 440px; }
+
+.loc-name { font-size: 18px; font-weight: 700; letter-spacing: -.2px; margin: 16px 0 0; }
+.box > .loc-name:first-child { margin-top: 0; }

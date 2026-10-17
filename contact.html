@@ -31,18 +31,39 @@
   <section>
     <div class="split">
       <!-- message form -->
-      <div class="box">
+      <form class="box" data-contact novalidate>
+        <input type="hidden" name="_subject" value="New message from the website">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
         <div class="grid g2">
-          <div><div class="label"></div><div class="field"></div></div>
-          <div><div class="label"></div><div class="field"></div></div>
+          <div>
+            <label class="flabel" for="c-name">Name</label>
+            <input class="field" id="c-name" name="name" required autocomplete="name">
+          </div>
+          <div>
+            <label class="flabel" for="c-email">Email</label>
+            <input class="field" id="c-email" name="email" type="email" required autocomplete="email">
+          </div>
         </div>
         <div class="grid g2">
-          <div><div class="label"></div><div class="field"></div></div>
-          <div><div class="label"></div><div class="field"></div></div>
+          <div>
+            <label class="flabel" for="c-phone">Phone (optional)</label>
+            <input class="field" id="c-phone" name="phone" type="tel" autocomplete="tel">
+          </div>
+          <div>
+            <label class="flabel" for="c-topic">Interested in</label>
+            <select class="field" id="c-topic" name="interested_in">
+              <option>Vinyl flooring</option><option>Laminate flooring</option><option>Cabinets</option>
+              <option>Countertops</option><option>Baseboards</option><option>Wall panels</option><option>Not sure yet</option>
+            </select>
+          </div>
         </div>
-        <div class="label"></div><div class="field area"></div>
-        <div class="btn solid"></div>
-      </div>
+        <label class="flabel" for="c-msg">Message</label>
+        <textarea class="field area" id="c-msg" name="message" required></textarea>
+        <button type="submit" class="btn solid txt">Send message</button>
+        <div class="form-status" role="status" aria-live="polite"></div>
+      </form>
 
       <!-- direct contact -->
       <div>
@@ -59,5 +80,6 @@
   <div><div class="line m"></div><div class="line m"></div><div class="line m"></div></div>
   <div><div class="line m"></div><div class="line s"></div><span class="icon"></span> <span class="icon"></span> <span class="icon"></span></div>
 </div></div></footer>
+<script src="contact-form.js"></script>
 <script src="motion.js"></script>
 </body></html>

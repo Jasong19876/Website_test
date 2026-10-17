@@ -36,7 +36,7 @@
   <section>
     <!-- LUXURY VINYL: featured, large -->
     <div class="head"><span class="tag solid">8mm</span><h2 class="sec-title">Luxury Vinyl</h2></div>
-    <p class="sec-text">8mm luxury vinyl plank in a range of colors. Pick a color to see it in a room.</p>
+    <p class="sec-text">8mm luxury vinyl plank with a 20 mil wear layer. Waterproof, scratch resistant and easy click-and-lock installation.</p>
     <div class="feature">
       <div class="card"><div class="img xl" data-img="Large photo: luxury vinyl plank in a styled room"></div><div class="line m"></div></div>
       <div class="grid" style="gap:24px">
@@ -52,7 +52,7 @@
   <section>
     <!-- LAMINATE: same layout as vinyl -->
     <div class="head"><span class="tag">14mm</span><h2 class="sec-title">Laminate</h2></div>
-    <p class="sec-text">14mm laminate flooring in a range of colors. Pick a color to see it in a room.</p>
+    <p class="sec-text">14mm laminate flooring with an AC4 wear layer. Waterproof, scratch resistant and easy click-and-lock installation.</p>
     <div class="feature">
       <div class="card"><div class="img xl" data-img="Large photo: laminate floor in a styled room"></div><div class="line m"></div></div>
       <div class="grid" style="gap:24px">
@@ -100,9 +100,9 @@
   <!-- locations -->
   <section>
     <div class="split">
-      <div class="img map" data-img="Map with 3 location pins"></div>
+      <div class="mapwrap"><iframe src="https://www.google.com/maps?q=2170+Wardrobe+Ave,+Merced,+CA+95341&amp;z=15&amp;output=embed" title="Map showing 2170 Wardrobe Ave, Merced, CA" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
       <div>
-        <div class="box"><div class="line b"></div><div class="line"></div><div class="line s"></div></div><br>
+        <div class="box"><h3 class="loc-name">Royal Building Outlets &ndash; Merced</h3><div class="addr"><a href="https://www.google.com/maps/search/?api=1&amp;query=2170+Wardrobe+Ave+Merced+CA+95341" target="_blank" rel="noopener">2170 Wardrobe Ave<br>Merced, CA 95341</a></div></div><br>
         <div class="box"><div class="line b"></div><div class="line"></div><div class="line s"></div></div><br>
         <div class="box"><div class="line b"></div><div class="line"></div><div class="line s"></div></div>
       </div>
@@ -113,18 +113,26 @@
 
   <!-- message form -->
   <section>
-    <div class="box">
-      <div class="grid g2">
-        <div>
-          <div class="label"></div><div class="field"></div>
-          <div class="label"></div><div class="field"></div>
+    <form class="box" data-contact novalidate>
+        <input type="hidden" name="_subject" value="New message from the website">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="grid g2">
+          <div>
+            <label class="flabel" for="h-name">Name</label>
+            <input class="field" id="h-name" name="name" required autocomplete="name">
+            <label class="flabel" for="h-email">Email</label>
+            <input class="field" id="h-email" name="email" type="email" required autocomplete="email">
+          </div>
+          <div>
+            <label class="flabel" for="h-msg">Message</label>
+            <textarea class="field area" id="h-msg" name="message" required></textarea>
+          </div>
         </div>
-        <div>
-          <div class="label"></div><div class="field area"></div>
-        </div>
-      </div>
-      <div class="btn solid"></div>
-    </div>
+        <button type="submit" class="btn solid txt">Send message</button>
+        <div class="form-status" role="status" aria-live="polite"></div>
+      </form>
   </section>
 </div>
 
@@ -134,6 +142,7 @@
   <div><div class="line m"></div><div class="line s"></div><span class="icon"></span> <span class="icon"></span> <span class="icon"></span></div>
 </div></div></footer>
 
-<div class="chat"></div>
+<a class="chat" href="contact.html" aria-label="Send us a message"></a>
+<script src="contact-form.js"></script>
 <script src="motion.js"></script>
 </body></html>

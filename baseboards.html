@@ -52,7 +52,7 @@
           <div class="img" data-p="2" data-img="Photo: up close"></div>
           <div class="img" data-p="3" data-img="Photo: corner joint"></div>
         </div>
-        <div class="btn solid"></div>
+        <a class="btn solid txt" id="estimate" href="contact.html?topic=Baseboards">Get an estimate</a>
       </div>
     </div>
   </section>
@@ -70,7 +70,7 @@
   <div><div class="line m"></div><div class="line m"></div><div class="line m"></div></div>
   <div><div class="line m"></div><div class="line s"></div><span class="icon"></span> <span class="icon"></span> <span class="icon"></span></div>
 </div></div></footer>
-<div class="chat"></div>
+<a class="chat" href="contact.html" aria-label="Send us a message"></a>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -197,6 +197,7 @@
     document.getElementById('bbt').textContent = p.ts;
     document.getElementById('bbh').textContent = p.hs;
     document.getElementById('bbl').textContent = p.L;
+    document.getElementById('estimate').href = 'contact.html?topic=Baseboards&item=' + encodeURIComponent(p.c);
     cards.forEach(function (c, i) { c.classList.toggle('on', i === cur); });
     thumbs.forEach(function (t) { t.classList.toggle('on', +t.dataset.p === photo); });
     var show3d = photo === 1 && ok;
