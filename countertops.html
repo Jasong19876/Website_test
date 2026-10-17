@@ -1,0 +1,88 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wireframe - Countertops</title><link rel="stylesheet" href="style.css"></head><body>
+
+<header><div class="wrap">
+  <div class="logo"></div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="vinyl.html">Vinyl</a>
+    <a href="laminate.html">Laminate</a>
+    <div class="dd">
+      <a href="cabinets.html">Cabinets</a>
+      <div class="menu">
+        <a href="cabinets.html#base">Base</a>
+        <a href="cabinets.html#wall">Wall</a>
+        <a href="cabinets.html#pantry">Pantry</a>
+        <a href="cabinets.html#vanity">Vanity</a>
+        <a href="cabinets.html#sink-base">Sink Base</a>
+        <a href="cabinets.html#corner">Corner</a>
+      </div>
+    </div>
+    <a class="here" href="countertops.html">Countertops</a>
+    <a href="baseboards.html">Baseboards</a>
+    <a href="wall-panels.html">Wall Panels</a>
+    <a href="locations.html">Locations</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+  <section><div class="img banner" data-img="Wide banner: kitchen island countertop"></div></section>
+
+  <!-- selected color: image left, name + description right -->
+  <section>
+    <div class="colorfeat">
+      <div class="img" id="featimg" style="min-height:400px" data-img="Large photo: color 1 countertop in a kitchen"></div>
+      <div class="info">
+        <div class="line b"></div>
+        <div class="line"></div><div class="line"></div><div class="line m"></div><div class="line s"></div>
+        <div class="btn solid"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- all colors -->
+  <section>
+    <div class="grid g4 colorgrid" id="colorgrid">
+      <div class="card on" data-i="1"><div class="img sq" data-img="Color 1: countertop slab sample"></div><div class="line b"></div></div>
+      <div class="card" data-i="2"><div class="img sq" data-img="Color 2: countertop slab sample"></div><div class="line b"></div></div>
+      <div class="card" data-i="3"><div class="img sq" data-img="Color 3: countertop slab sample"></div><div class="line b"></div></div>
+      <div class="card" data-i="4"><div class="img sq" data-img="Color 4: countertop slab sample"></div><div class="line b"></div></div>
+      <div class="card" data-i="5"><div class="img sq" data-img="Color 5: countertop slab sample"></div><div class="line b"></div></div>
+      <div class="card" data-i="6"><div class="img sq" data-img="Color 6: countertop slab sample"></div><div class="line b"></div></div>
+      <div class="card" data-i="7"><div class="img sq" data-img="Color 7: countertop slab sample"></div><div class="line b"></div></div>
+      <div class="card" data-i="8"><div class="img sq" data-img="Color 8: countertop slab sample"></div><div class="line b"></div></div>
+      <div class="card" data-i="9"><div class="img sq" data-img="Color 9: countertop slab sample"></div><div class="line b"></div></div>
+      <div class="card" data-i="10"><div class="img sq" data-img="Color 10: countertop slab sample"></div><div class="line b"></div></div>
+      <div class="card" data-i="11"><div class="img sq" data-img="Color 11: countertop slab sample"></div><div class="line b"></div></div>
+      <div class="card" data-i="12"><div class="img sq" data-img="Color 12: countertop slab sample"></div><div class="line b"></div></div>
+    </div>
+  </section>
+
+</div>
+
+<footer><div class="wrap"><div class="grid g3">
+  <div><div class="logo"></div></div>
+  <div><div class="line m"></div><div class="line m"></div><div class="line m"></div></div>
+  <div><div class="line m"></div><div class="line s"></div><span class="icon"></span> <span class="icon"></span> <span class="icon"></span></div>
+</div></div></footer>
+<div class="chat"></div>
+
+<script>
+(function () {
+  var cards = document.querySelectorAll('#colorgrid .card');
+  var img = document.getElementById('featimg');
+  cards.forEach(function (c) {
+    c.addEventListener('click', function () {
+      cards.forEach(function (x) { x.classList.toggle('on', x === c); });
+      img.setAttribute('data-img', 'Large photo: color ' + c.dataset.i + ' countertop in a kitchen');
+      img.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+})();
+</script>
+<script src="motion.js"></script>
+</body></html>

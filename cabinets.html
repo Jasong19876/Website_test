@@ -1,0 +1,169 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wireframe - Cabinets</title><link rel="stylesheet" href="style.css"></head><body>
+
+<header><div class="wrap">
+  <div class="logo"></div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="vinyl.html">Vinyl</a>
+    <a href="laminate.html">Laminate</a>
+    <div class="dd">
+      <a class="here" href="cabinets.html">Cabinets</a>
+      <div class="menu">
+        <a href="cabinets.html#base">Base</a>
+        <a href="cabinets.html#wall">Wall</a>
+        <a href="cabinets.html#pantry">Pantry</a>
+        <a href="cabinets.html#vanity">Vanity</a>
+        <a href="cabinets.html#sink-base">Sink Base</a>
+        <a href="cabinets.html#corner">Corner</a>
+      </div>
+    </div>
+    <a href="countertops.html">Countertops</a>
+    <a href="baseboards.html">Baseboards</a>
+    <a href="wall-panels.html">Wall Panels</a>
+    <a href="locations.html">Locations</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+  <section><div class="img banner" data-img="Wide banner: full kitchen with cabinets"></div></section>
+  <section>
+    <div class="typesel" id="typesel">
+      <a class="pick" href="#" id="pick">Select type</a>
+      <div class="menu" id="typemenu">
+        <a href="#base">Base</a>
+        <a href="#wall">Wall</a>
+        <a href="#pantry">Pantry</a>
+        <a href="#vanity">Vanity</a>
+        <a href="#sink-base">Sink Base</a>
+        <a href="#corner">Corner</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- cabinet list (left) + 3D viewer & specs (right) -->
+  <section>
+    <div class="browser">
+      <div class="cablist" id="cablist"></div>
+
+      <div id="detail" style="display:none">
+        <!-- 3D MODEL GOES HERE: sized to fit the page (about 55% of screen height) -->
+        <div class="viewer">
+          <div class="model" id="modelmark"></div>
+          <div class="rot"></div>
+          <div class="ctrl"><span></span><span></span><span></span></div>
+        </div>
+
+        <!-- SPECS GO HERE -->
+        <div class="specs">
+          <div class="spec-code" id="specCode"></div>
+          <div class="spec-title" id="specTitle"></div>
+          <div class="rows" id="specRows"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer><div class="wrap"><div class="grid g3">
+  <div><div class="logo"></div></div>
+  <div><div class="line m"></div><div class="line m"></div><div class="line m"></div></div>
+  <div><div class="line m"></div><div class="line s"></div><span class="icon"></span> <span class="icon"></span> <span class="icon"></span></div>
+</div></div></footer>
+<div class="chat"></div>
+
+<script>
+(function () {
+  var names = {};
+  document.querySelectorAll('#typemenu a').forEach(function (a) { names[a.getAttribute('href').slice(1)] = a.textContent; });
+  var pick = document.getElementById('pick');
+  var sel = document.getElementById('typesel');
+
+
+  var DESC = {"B09":{"t":"Base","w":"9\"","d":"24\"","h":"34-1/2\"","c":"1 door","o":""},"B09PO":{"t":"Base spice rack","w":"9\"","d":"24\"","h":"34-1/2\"","c":"","o":""},"B12":{"t":"Base","w":"12\"","d":"24\"","h":"34-1/2\"","c":"1 drawer, 1 door","o":""},"B12PO":{"t":"Base spice rack","w":"12\"","d":"24\"","h":"34-1/2\"","c":"","o":""},"B15":{"t":"Base","w":"15\"","d":"24\"","h":"34-1/2\"","c":"1 drawer, 1 door","o":""},"B18":{"t":"Base","w":"18\"","d":"24\"","h":"34-1/2\"","c":"1 drawer, 1 door","o":""},"B21":{"t":"Base","w":"21\"","d":"24\"","h":"34-1/2\"","c":"1 drawer, 1 door","o":""},"B24":{"t":"Base","w":"24\"","d":"24\"","h":"34-1/2\"","c":"1 drawer, 2 doors","o":""},"B27":{"t":"Base","w":"27\"","d":"24\"","h":"34-1/2\"","c":"1 drawer, 2 doors","o":""},"B30":{"t":"Base","w":"30\"","d":"24\"","h":"34-1/2\"","c":"1 drawer, 2 doors","o":""},"B33":{"t":"Base","w":"33\"","d":"24\"","h":"34-1/2\"","c":"2 drawers, 2 doors","o":""},"B36":{"t":"Base","w":"36\"","d":"24\"","h":"34-1/2\"","c":"2 drawers, 2 doors","o":""},"B39":{"t":"Base","w":"39\"","d":"24\"","h":"34-1/2\"","c":"2 drawers, 2 doors","o":""},"BMC27":{"t":"Base microwave cabinet","w":"27\"","d":"24\"","h":"34-1/2\"","c":"","o":"24\" W × 17.5\" H"},"BMC30":{"t":"Base microwave cabinet","w":"30\"","d":"24\"","h":"34-1/2\"","c":"","o":"27\" W × 17.5\" H"},"DB12":{"t":"Drawer base","w":"12\"","d":"24\"","h":"34-1/2\"","c":"3 drawers","o":""},"DB15":{"t":"Drawer base","w":"15\"","d":"24\"","h":"34-1/2\"","c":"3 drawers","o":""},"DB18":{"t":"Drawer base","w":"18\"","d":"24\"","h":"34-1/2\"","c":"3 drawers","o":""},"DB18-2":{"t":"Drawer base","w":"18\"","d":"24\"","h":"34-1/2\"","c":"2 drawers","o":""},"DB21":{"t":"Drawer base","w":"21\"","d":"24\"","h":"34-1/2\"","c":"3 drawers","o":""},"DB21-2":{"t":"Drawer base","w":"21\"","d":"24\"","h":"34-1/2\"","c":"2 drawers","o":""},"DB24":{"t":"Drawer base","w":"24\"","d":"24\"","h":"34-1/2\"","c":"3 drawers","o":""},"DB24-2":{"t":"Drawer base","w":"24\"","d":"24\"","h":"34-1/2\"","c":"2 drawers","o":""},"DB27":{"t":"Drawer base","w":"27\"","d":"24\"","h":"34-1/2\"","c":"3 drawers","o":""},"DB30":{"t":"Drawer base","w":"30\"","d":"24\"","h":"34-1/2\"","c":"3 drawers","o":""},"DB30-2":{"t":"Drawer base","w":"30\"","d":"24\"","h":"34-1/2\"","c":"2 drawers","o":""},"DB36":{"t":"Drawer base","w":"36\"","d":"24\"","h":"34-1/2\"","c":"3 drawers","o":""},"DB36-2":{"t":"Drawer base","w":"36\"","d":"24\"","h":"34-1/2\"","c":"2 drawers","o":""},"W0930":{"t":"Wall","w":"9\"","d":"12\"","h":"30\"","c":"1 door","o":""},"W0939":{"t":"Wall","w":"9\"","d":"12\"","h":"39\"","c":"1 door","o":""},"W1230":{"t":"Wall","w":"12\"","d":"12\"","h":"30\"","c":"1 door","o":""},"W1239":{"t":"Wall","w":"12\"","d":"12\"","h":"39\"","c":"1 door","o":""},"W1530":{"t":"Wall","w":"15\"","d":"12\"","h":"30\"","c":"1 door","o":""},"W1539":{"t":"Wall","w":"15\"","d":"12\"","h":"39\"","c":"1 door","o":""},"W1830":{"t":"Wall","w":"18\"","d":"12\"","h":"30\"","c":"1 door","o":""},"W1839":{"t":"Wall","w":"18\"","d":"12\"","h":"39\"","c":"1 door","o":""},"W2130":{"t":"Wall","w":"21\"","d":"12\"","h":"30\"","c":"1 door","o":""},"W2139":{"t":"Wall","w":"21\"","d":"12\"","h":"39\"","c":"1 door","o":""},"W2430":{"t":"Wall","w":"24\"","d":"12\"","h":"30\"","c":"2 doors","o":""},"W2439":{"t":"Wall","w":"24\"","d":"12\"","h":"39\"","c":"2 doors","o":""},"W2730":{"t":"Wall","w":"27\"","d":"12\"","h":"30\"","c":"2 doors","o":""},"W2739":{"t":"Wall","w":"27\"","d":"12\"","h":"39\"","c":"2 doors","o":""},"W3012":{"t":"Wall","w":"30\"","d":"12\"","h":"12\"","c":"2 doors","o":""},"W3018":{"t":"Wall","w":"30\"","d":"12\"","h":"18\"","c":"2 doors","o":""},"W3021":{"t":"Wall","w":"30\"","d":"12\"","h":"21\"","c":"2 doors","o":""},"W3030":{"t":"Wall","w":"30\"","d":"12\"","h":"30\"","c":"2 doors","o":""},"W3039":{"t":"Wall","w":"30\"","d":"12\"","h":"39\"","c":"2 doors","o":""},"W3321":{"t":"Wall","w":"33\"","d":"12\"","h":"21\"","c":"2 doors","o":""},"W3330":{"t":"Wall","w":"33\"","d":"12\"","h":"30\"","c":"2 doors","o":""},"W3612":{"t":"Wall","w":"36\"","d":"12\"","h":"12\"","c":"2 doors","o":""},"W3618":{"t":"Wall","w":"36\"","d":"12\"","h":"18\"","c":"2 doors","o":""},"W3621":{"t":"Wall","w":"36\"","d":"12\"","h":"21\"","c":"2 doors","o":""},"W362124":{"t":"Wall","w":"36\"","d":"24\"","h":"21\"","c":"2 doors","o":""},"W3624":{"t":"Wall","w":"36\"","d":"12\"","h":"24\"","c":"2 doors","o":""},"W3630":{"t":"Wall","w":"36\"","d":"12\"","h":"30\"","c":"2 doors","o":""},"W3639":{"t":"Wall","w":"36\"","d":"12\"","h":"39\"","c":"2 doors","o":""},"W3930":{"t":"Wall","w":"39\"","d":"12\"","h":"30\"","c":"2 doors","o":""},"W3939":{"t":"Wall","w":"39\"","d":"12\"","h":"39\"","c":"2 doors","o":""},"WM2730":{"t":"Wall microwave","w":"27\"","d":"12\"","h":"30\"","c":"2 doors","o":"24\" W × 15.5\" H"},"WM2739":{"t":"Wall microwave","w":"27\"","d":"12\"","h":"39\"","c":"2 doors","o":"24\" W × 15.5\" H"},"WP1884":{"t":"Wall pantry","w":"18\"","d":"24\"","h":"84\"","c":"2 doors","o":""},"WP1893":{"t":"Wall pantry","w":"18\"","d":"24\"","h":"93\"","c":"2 doors","o":""},"WP2184":{"t":"Wall pantry","w":"21\"","d":"24\"","h":"84\"","c":"2 doors","o":""},"WP2193":{"t":"Wall pantry","w":"21\"","d":"24\"","h":"93\"","c":"2 doors","o":""},"WP2484":{"t":"Wall pantry","w":"24\"","d":"24\"","h":"84\"","c":"4 doors","o":""},"WP2493":{"t":"Wall pantry","w":"24\"","d":"24\"","h":"93\"","c":"4 doors","o":""},"WP3084":{"t":"Wall pantry","w":"30\"","d":"24\"","h":"84\"","c":"4 doors","o":""},"WP3093":{"t":"Wall pantry","w":"30\"","d":"24\"","h":"93\"","c":"4 doors","o":""},"WP3684":{"t":"Wall pantry","w":"36\"","d":"24\"","h":"84\"","c":"2 doors","o":""},"WP3693":{"t":"Wall pantry","w":"36\"","d":"24\"","h":"93\"","c":"4 doors","o":""},"MP309324":{"t":"Wall microwave pantry","w":"30\"","d":"24\"","h":"93\"","c":"2 doors with soft close hinge, 1 microwave hole, 3 drawers","o":"27\" W × 16-1/4\" H"},"V3021L/R":{"t":"Vanity cabinet","w":"30\"","d":"21\"","h":"34-1/2\"","c":"18\" full door (L/R) & 12\" drawers (L/R)","o":""},"V3621L/R":{"t":"Vanity cabinet","w":"36\"","d":"21\"","h":"34-1/2\"","c":"24\" double door & 12\" drawers (L/R)","o":""},"V4221L/R":{"t":"Vanity cabinet","w":"42\"","d":"21\"","h":"34-1/2\"","c":"27\" double doors (L/R) & 15\" drawers (L/R)","o":""},"VDB12":{"t":"Vanity 3-drawer cabinet","w":"12\"","d":"21\"","h":"34-1/2\"","c":"","o":""},"VDB15":{"t":"Vanity 3-drawer cabinet","w":"15\"","d":"21\"","h":"34-1/2\"","c":"","o":""},"VDB18":{"t":"Vanity 3-drawer cabinet","w":"18\"","d":"21\"","h":"34-1/2\"","c":"","o":""},"VS24":{"t":"Vanity full door (sink) cabinet","w":"24\"","d":"21\"","h":"34-1/2\"","c":"","o":""},"VS27":{"t":"Vanity full door (sink) cabinet","w":"27\"","d":"21\"","h":"34-1/2\"","c":"","o":""},"VS30":{"t":"Vanity full door (sink) cabinet","w":"30\"","d":"21\"","h":"34-1/2\"","c":"","o":""},"VS36":{"t":"Vanity full door (sink) cabinet","w":"36\"","d":"21\"","h":"34-1/2\"","c":"","o":""},"VSD48":{"t":"Vanity cabinet","w":"48\"","d":"21\"","h":"34-1/2\"","c":"24\" center doors & 3 × 12\" drawers on both side","o":""},"VSD57":{"t":"Vanity cabinet","w":"57\"","d":"21\"","h":"34-1/2\"","c":"27\" center doors & 3 × 15\" drawers on both side","o":""},"VSDS60":{"t":"Vanity cabinet","w":"60\"","d":"21\"","h":"34-1/2\"","c":"24\" doors both side, center 3 × 12\" drawers","o":""},"SB30":{"t":"Sink base","w":"30\"","d":"24\"","h":"34-1/2\"","c":"2 doors","o":""},"SB33":{"t":"Sink base","w":"33\"","d":"24\"","h":"34-1/2\"","c":"2 doors","o":""},"SB36":{"t":"Sink base","w":"36\"","d":"24\"","h":"34-1/2\"","c":"2 doors","o":""},"SB39":{"t":"Sink base","w":"39\"","d":"24\"","h":"34-1/2\"","c":"2 doors","o":""},"FSB36":{"t":"Apron front sink base","w":"36\"","d":"24\"","h":"34-1/2\"","c":"2 doors","o":""},"NCSB42":{"t":"Neo-corner sink base","w":"42\"","d":"24\"","h":"34-1/2\"","c":"2 doors","o":""},"BBC42 Box":{"t":"Blind corner base","w":"42\"","d":"24\"","h":"34-1/2\"","c":"Box","o":""},"LS33":{"t":"Lazy susan base","w":"33\"","d":"24\"","h":"34-1/2\"","c":"1 bi-fold door","o":""},"LS36":{"t":"Lazy susan base","w":"36\"","d":"24\"","h":"34-1/2\"","c":"1 bi-fold door","o":""},"WBC2730":{"t":"Wall blind corner","w":"27\"","d":"12\"","h":"30\"","c":"1 door","o":""},"WBC2739":{"t":"Wall blind corner","w":"27\"","d":"12\"","h":"39\"","c":"1 door","o":""},"WDC2430":{"t":"Wall diagonal corner","w":"24\"","d":"12\"","h":"30\"","c":"1 door","o":""},"WDC2439":{"t":"Wall diagonal corner","w":"24\"","d":"12\"","h":"39\"","c":"1 door","o":""}};
+  var CABS = {
+    'base': ['B09', 'B09PO', 'B12', 'B12PO', 'B15', 'B18', 'B21', 'B24', 'B27', 'B30', 'B33', 'B36', 'B39', 'BMC27', 'BMC30', 'DB12', 'DB15', 'DB18', 'DB18-2', 'DB21', 'DB21-2', 'DB24', 'DB24-2', 'DB27', 'DB30', 'DB30-2', 'DB36', 'DB36-2'],
+    'wall': ['W0930', 'W0939', 'W1230', 'W1239', 'W1530', 'W1539', 'W1830', 'W1839', 'W2130', 'W2139', 'W2430', 'W2439', 'W2730', 'W2739', 'W3012', 'W3015', 'W3018', 'W3021', 'W3024', 'W3030', 'W3039', 'W3315', 'W3321', 'W3330', 'W3339', 'W3612', 'W3618', 'W3621', 'W361224', 'W361524', 'W362124', 'W3624', 'W3630', 'W3639', 'W3930', 'W3939', 'WM2730', 'WM2739'],
+    'pantry': ['WP1884', 'WP1887', 'WP1893', 'WP2184', 'WP2187', 'WP2193', 'WP2484', 'WP2487', 'WP2493', 'WP3084', 'WP3087', 'WP3093', 'WP3684', 'WP3687', 'WP3693', 'MP309324'],
+    'vanity': ['V3021L/R', 'V3621L/R', 'V4221L/R', 'VDB12', 'VDB15', 'VDB18', 'VS24', 'VS27', 'VS30', 'VS36', 'VSD48', 'VSD57', 'VSDS60'],
+    'sink-base': ['SB30', 'SB33', 'SB36', 'SB39', 'FSB36', 'NCSB42'],
+    'corner': ['BBC42 Box', 'LS33', 'LS36', 'WBC2730', 'WBC2739', 'WDC2430', 'WDC2439']
+  };
+  var list = document.getElementById('cablist');
+  var detail = document.getElementById('detail');
+  var mark = document.getElementById('modelmark');
+
+
+
+  function fmtLine(c) {
+    var d = DESC[c];
+    return d ? '<div class="sub">' + d.t + (d.w ? ' &middot; ' + d.w + ' wide' : '') + '</div>' : '<div class="line"></div>';
+  }
+  function fillSpecs(code) {
+    var d = DESC[code], rows = document.getElementById('specRows');
+    document.getElementById('specCode').textContent = code;
+    document.getElementById('specTitle').textContent = d ? d.t : 'Details coming soon';
+    var out = '';
+    function row(label, val, wide) { if (val) out += '<div class="r' + (wide ? ' wide' : '') + '"><span>' + label + '</span><span>' + val + '</span></div>'; }
+    if (d) {
+      row('Width', d.w); row('Depth', d.d); row('Height', d.h);
+      row('Includes', d.c, true); row('Opening', d.o, true);
+    } else {
+      for (var i = 0; i < 3; i++) out += '<div class="r"><div class="line"></div><div class="line v"></div></div>';
+    }
+    rows.innerHTML = out;
+  }
+
+  function showCab(code) {
+    list.querySelectorAll('.item').forEach(function (i) { i.classList.toggle('on', i.dataset.code === code); });
+    mark.textContent = '3D model: ' + code + ' (drag to rotate 360°)';
+    detail.style.display = code ? 'block' : 'none';
+    if (code) fillSpecs(code);
+  }
+  function renderList(slug) {
+    list.innerHTML = '';
+    detail.style.display = 'none';
+    if (!slug || !CABS[slug]) { list.innerHTML = '<div class="empty"><div class="line"></div><div class="line m"></div></div>'; return; }
+    CABS[slug].forEach(function (code, idx) {
+      var d = document.createElement('div');
+      d.className = 'item'; d.dataset.code = code; d.style.setProperty('--i', Math.min(idx, 14));
+      d.innerHTML = '<div class="thumb"></div><div><div class="name">' + code + '</div>' + fmtLine(code) + '</div>';
+      d.addEventListener('click', function () { showCab(code); });
+      list.appendChild(d);
+    });
+    showCab(CABS[slug][0]);
+  }
+
+  function choose(slug) {
+    if (!names[slug]) slug = 'base';  // default category
+    pick.textContent = names[slug];
+    // highlight in BOTH menus (top nav + under banner)
+    document.querySelectorAll('.menu a').forEach(function (a) {
+      var h = a.getAttribute('href'), s = h.slice(h.indexOf('#') + 1);
+      a.classList.toggle('sel', !!slug && h.indexOf('#') > -1 && s === slug);
+    });
+    sel.classList.remove('open');
+    renderList(slug);
+  }
+
+  // clicks in either menu update both without reloading
+  document.querySelectorAll('.menu a').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var h = a.getAttribute('href');
+      if (h.indexOf('#') < 0) return;
+      e.preventDefault();
+      var slug = h.slice(h.indexOf('#') + 1);
+      history.replaceState(null, '', '#' + slug);
+      choose(slug);
+    });
+  });
+  pick.addEventListener('click', function (e) { e.preventDefault(); sel.classList.toggle('open'); });
+  window.addEventListener('hashchange', function () { choose(location.hash.slice(1) || 'base'); });
+  choose(location.hash.slice(1) || 'base');
+})();
+</script>
+<script src="motion.js"></script>
+</body></html>

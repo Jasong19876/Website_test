@@ -1,0 +1,222 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wireframe - Baseboards</title><link rel="stylesheet" href="style.css"></head><body>
+
+<header><div class="wrap">
+  <div class="logo"></div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="vinyl.html">Vinyl</a>
+    <a href="laminate.html">Laminate</a>
+    <div class="dd">
+      <a href="cabinets.html">Cabinets</a>
+      <div class="menu">
+        <a href="cabinets.html#base">Base</a>
+        <a href="cabinets.html#wall">Wall</a>
+        <a href="cabinets.html#pantry">Pantry</a>
+        <a href="cabinets.html#vanity">Vanity</a>
+        <a href="cabinets.html#sink-base">Sink Base</a>
+        <a href="cabinets.html#corner">Corner</a>
+      </div>
+    </div>
+    <a href="countertops.html">Countertops</a>
+    <a class="here" href="baseboards.html">Baseboards</a>
+    <a href="wall-panels.html">Wall Panels</a>
+    <a href="locations.html">Locations</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+  <section><div class="img banner" data-img="Wide banner: baseboard along a finished floor"></div></section>
+
+  <!-- selected profile: 3D model left, details right -->
+  <section>
+    <div class="colorfeat">
+      <div>
+        <div class="viewer dark" id="bbview"><canvas id="bbcanvas"></canvas><div class="hint">Drag to rotate &middot; scroll to zoom</div></div>
+        <div class="img viewer-ph" id="featimg" data-img="Photo" style="display:none"></div>
+      </div>
+      <div class="info">
+        <div class="bb-title" id="bbtitle"></div>
+        <div class="bb-code" id="bbcode"></div>
+        <div class="bb-size" id="bbsize"></div>
+        <div class="line"></div><div class="line m"></div>
+        <div class="bb-specs">
+          <div class="r"><span>Thickness</span><span id="bbt"></span></div>
+          <div class="r"><span>Height</span><span id="bbh"></span></div>
+          <div class="r"><span>Length</span><span id="bbl"></span></div>
+        </div>
+        <div class="thumbs" id="thumbs">
+          <div class="img on" data-p="1" data-img="3D model"></div>
+          <div class="img" data-p="2" data-img="Photo: up close"></div>
+          <div class="img" data-p="3" data-img="Photo: corner joint"></div>
+        </div>
+        <div class="btn solid"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- all profiles -->
+  <section>
+    <div class="grid g4 colorgrid" id="colorgrid"></div>
+  </section>
+</div>
+
+<footer><div class="wrap"><div class="grid g3">
+  <div><div class="logo"></div></div>
+  <div><div class="line m"></div><div class="line m"></div><div class="line m"></div></div>
+  <div><div class="line m"></div><div class="line s"></div><span class="icon"></span> <span class="icon"></span> <span class="icon"></span></div>
+</div></div></footer>
+<div class="chat"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function () {
+  /* Front-edge profile of each baseboard: [x, y] as fractions of thickness / height,
+     running bottom to top. x = 1 is the front face, x = 0 is the wall side. */
+  var FLAT = [[1,0],[1,.975],[.88,1]];
+  var EASED = [[1,0],[1,.90],[.92,.94],[.80,.98],[.78,1]];
+  var COLONIAL_A = [[1,0],[1,.62],[.88,.64],[.80,.68],[.80,.74],[.92,.77],[1,.82],[.96,.88],[.84,.91],[.78,.94],[.80,.98],[.90,1]];
+  var COLONIAL_B = [[1,0],[1,.55],[.88,.57],[.80,.61],[.80,.66],[.94,.70],[1,.75],[.94,.80],[.80,.82],[.80,.86],[.92,.90],[1,.94],[.92,1]];
+  var COLONIAL_C = [[1,0],[1,.42],[.88,.45],[.78,.50],[.78,.56],[.92,.60],[1,.66],[.92,.72],[.80,.74],[.80,.80],[.92,.86],[1,.92],[.90,1]];
+  var COLONIAL_D = [[1,0],[1,.36],[.86,.40],[.78,.46],[.78,.56],[.94,.62],[1,.70],[.94,.78],[.80,.82],[.80,.90],[.92,.96],[.96,1]];
+  var CASE_A = [[1,0],[1,.10],[.94,.13],[.78,.19],[.62,.30],[.56,.44],[.62,.56],[.78,.64],[.94,.70],[1,.75],[1,.80],[.90,.84],[.78,.86],[.78,.92],[.90,.96],[1,1]];
+  var CASE_B = [[1,0],[1,.09],[.94,.12],[.78,.17],[.62,.27],[.55,.42],[.60,.56],[.76,.66],[.92,.72],[1,.77],[1,.82],[.90,.86],[.78,.88],[.78,.93],[.92,.97],[1,1]];
+  var SHOE = [[1,0],[1,.35]], QR = [[1,0]], k, th;
+  for (k = 0; k <= 12; k++) { th = k / 12 * Math.PI / 2; SHOE.push([.15 + .85 * Math.cos(th), .35 + .65 * Math.sin(th)]); }
+  for (k = 1; k <= 16; k++) { th = k / 16 * Math.PI / 2; QR.push([Math.cos(th), Math.sin(th)]); }
+
+  /* c = product code, t / h = thickness / height in inches, ts / hs / L = display text */
+  var P = [
+    { c:'B50-12-314', t:.5,    h:3.25,    ts:'1/2"',  hs:'3-1/4"', L:"16'", f:FLAT },
+    { c:'B50-12-412', t:.5,    h:4.5,     ts:'1/2"',  hs:'4-1/2"', L:"16'", f:FLAT },
+    { c:'B50-12-512', t:.5,    h:5.5,     ts:'1/2"',  hs:'5-1/2"', L:"16'", f:FLAT },
+    { c:'C567-14-500',t:.5625, h:5,       ts:'9/16"', hs:'5"',     L:"16'", f:CASE_A },
+    { c:'B51-14-314', t:.5625, h:3.25,    ts:'9/16"', hs:'3-1/4"', L:"16'", f:EASED },
+    { c:'B51-14-414', t:.5625, h:4.25,    ts:'9/16"', hs:'4-1/4"', L:"16'", f:EASED },
+    { c:'B51-14-514', t:.5625, h:5.25,    ts:'9/16"', hs:'5-1/4"', L:"16'", f:EASED },
+    { c:'C655-14-600',t:.5625, h:6,       ts:'9/16"', hs:'6"',     L:"16'", f:CASE_B },
+    { c:'B13-12-400', t:.5,    h:4,       ts:'1/2"',  hs:'4"',     L:"16'", f:COLONIAL_A },
+    { c:'B54-14-500', t:.5625, h:5,       ts:'9/16"', hs:'5"',     L:"16'", f:COLONIAL_B },
+    { c:'B33-14-212', t:.5625, h:2.5,     ts:'9/16"', hs:'2-1/2"', L:"17'", f:FLAT },
+    { c:'B54-14-378', t:.5625, h:3.875,   ts:'9/16"', hs:'3-7/8"', L:"16'", f:COLONIAL_C },
+    { c:'B13-12-512', t:.5,    h:5.5,     ts:'1/2"',  hs:'5-1/2"', L:"16'", f:COLONIAL_A },
+    { c:'B98-11-2132',n:'Base Shoe',     t:.4375, h:.65625, ts:'7/16"',  hs:'21/32"', L:'—', f:SHOE },
+    { c:'B41-14-212', t:.5625, h:2.5,     ts:'9/16"', hs:'2-1/2"', L:"17'", f:COLONIAL_D },
+    { c:'B99-16-2132',n:'Quarter Round', t:.65625,h:.65625, ts:'21/32"', hs:'21/32"', L:'—', f:QR }
+  ];
+
+  /* outline polygon in inches: [depth, height] */
+  function outline(p) {
+    var pts = [[0, 0]];
+    p.f.forEach(function (q) { pts.push([q[0] * p.t, q[1] * p.h]); });
+    if (pts[pts.length - 1][0] > 1e-6) pts.push([0, p.h]);
+    return pts;
+  }
+  function dim(p) { return p.ts + ' × ' + p.hs + (p.L === '—' ? '' : ' × ' + p.L); }
+
+  /* ---------- profile grid with drawn cross-sections ---------- */
+  function icon(p) {
+    var pts = outline(p), sy = 78 / p.h, sx = Math.min(sy * 3.2, 56 / p.t), x0 = 50 - p.t * sx / 2;
+    var d = pts.map(function (q) { return (x0 + q[0] * sx).toFixed(1) + ',' + (90 - q[1] * sy).toFixed(1); }).join(' ');
+    return '<svg viewBox="0 0 100 100"><polygon points="' + d + '" fill="#fff" stroke="#17171a" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  }
+  var grid = document.getElementById('colorgrid');
+  P.forEach(function (p, i) {
+    var d = document.createElement('div');
+    d.className = 'card'; d.dataset.i = i;
+    d.innerHTML = '<div class="img sq pf">' + icon(p) + '</div><div class="pfname">' + p.c + '</div><div class="pfsub">' + (p.n ? '<b>' + p.n + '</b> &middot; ' : '') + dim(p) + '</div>';
+    grid.appendChild(d);
+  });
+
+  /* ---------- 3D viewer ---------- */
+  var box = document.getElementById('bbview'), canvas = document.getElementById('bbcanvas'), ph = document.getElementById('featimg');
+  var renderer, scene, camera, controls, group, ok = false;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(32, 1, .05, 500);
+    controls = new THREE.OrbitControls(camera, canvas);
+    controls.enableDamping = true; controls.autoRotate = true; controls.autoRotateSpeed = 1.4; controls.enablePan = false;
+    controls.addEventListener('start', function () { controls.autoRotate = false; });
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xd8cdb4, .85));
+    var dl = new THREE.DirectionalLight(0xffffff, .9); dl.position.set(6, 10, 8); scene.add(dl);
+    var dl2 = new THREE.DirectionalLight(0xffe6b8, .35); dl2.position.set(-8, 3, -6); scene.add(dl2);
+    group = new THREE.Group(); scene.add(group);
+    ok = true;
+  } catch (e) { ok = false; }
+
+  function size() {
+    if (!ok) return;
+    var w = box.clientWidth, h = box.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+  }
+  if (window.ResizeObserver) new ResizeObserver(size).observe(box); else window.addEventListener('resize', size);
+
+  function build(p) {
+    if (!ok) return;
+    while (group.children.length) {
+      var o = group.children.pop();
+      if (o.geometry) o.geometry.dispose();
+    }
+    var pts = outline(p), shape = new THREE.Shape();
+    pts.forEach(function (q, i) { if (i) shape.lineTo(q[0], q[1]); else shape.moveTo(q[0], q[1]); });
+    shape.closePath();
+    var len = Math.min(12, Math.max(2.5, p.h * 2.6));
+    var geo = new THREE.ExtrudeGeometry(shape, { depth: len, bevelEnabled: false, curveSegments: 1, steps: 1 });
+    geo.translate(-p.t / 2, -p.h / 2, -len / 2);
+    var mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: 0xf6f3ec, roughness: .65, metalness: 0 }));
+    var edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 28), new THREE.LineBasicMaterial({ color: 0xb9ad94 }));
+    group.add(mesh); group.add(edges);
+    var r = Math.sqrt(len * len + p.h * p.h + p.t * p.t) / 2, dist = r * 2.7;
+    camera.position.set(.8 * dist, .55 * dist, 1.0 * dist);
+    controls.target.set(0, 0, 0);
+    controls.minDistance = r * 1.3; controls.maxDistance = r * 6;
+    controls.autoRotate = true;
+    controls.update();
+    size();
+  }
+  (function loop() { requestAnimationFrame(loop); if (ok) { controls.update(); renderer.render(scene, camera); } })();
+
+  /* ---------- selection ---------- */
+  var cards = grid.querySelectorAll('.card'), thumbs = document.querySelectorAll('#thumbs .img');
+  var cur = 0, photo = 1;
+  var views = { 2: 'up close', 3: 'corner joint' };
+
+  function render() {
+    var p = P[cur];
+    document.getElementById('bbtitle').textContent = p.n || 'Baseboard';
+    document.getElementById('bbcode').textContent = p.c;
+    document.getElementById('bbsize').textContent = dim(p);
+    document.getElementById('bbt').textContent = p.ts;
+    document.getElementById('bbh').textContent = p.hs;
+    document.getElementById('bbl').textContent = p.L;
+    cards.forEach(function (c, i) { c.classList.toggle('on', i === cur); });
+    thumbs.forEach(function (t) { t.classList.toggle('on', +t.dataset.p === photo); });
+    var show3d = photo === 1 && ok;
+    box.style.display = show3d ? '' : 'none';
+    ph.style.display = show3d ? 'none' : '';
+    if (!show3d) ph.setAttribute('data-img', photo === 1 ? '3D view needs WebGL' : 'Photo: ' + p.c + ', ' + views[photo]);
+    if (show3d) size();
+  }
+  cards.forEach(function (c, i) {
+    c.addEventListener('click', function () {
+      cur = i; photo = 1;           // a newly selected baseboard always starts on the 3D model
+      build(P[cur]); render();
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+  thumbs.forEach(function (t) {
+    t.addEventListener('click', function () { photo = +t.dataset.p; render(); });
+  });
+  build(P[0]); render();
+})();
+</script>
+<script src="motion.js"></script>
+</body></html>
