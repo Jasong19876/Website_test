@@ -1,9 +1,9 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Wireframe - Countertops</title><link rel="stylesheet" href="style.css"></head><body>
+<title>Wireframe - Countertops</title><link rel="stylesheet" href="style.css"><link rel="icon" type="image/png" href="images/Logo/Logo.png"></head><body>
 
 <header><div class="wrap">
-  <div class="logo"></div>
+  <a class="logo" href="index.html"><img src="images/Logo/logo-light.png" alt="Royal Building Outlets Inc" width="1280" height="633"></a>
   <nav>
     <a href="index.html">Home</a>
     <a href="vinyl.html">Vinyl</a>
@@ -30,14 +30,26 @@
 <div class="wrap">
   <section><div class="img banner" data-img="Wide banner: kitchen island countertop"></div></section>
 
+  <section style="margin-bottom:0">
+    <div class="seg" id="ctseg" role="tablist" aria-label="Countertops or islands">
+      <button type="button" class="on" data-kind="countertops" role="tab" aria-selected="true">Countertops</button>
+      <button type="button" data-kind="islands" role="tab" aria-selected="false">Islands</button>
+    </div>
+  </section>
+
   <!-- selected color: image left, name + description right -->
   <section>
     <div class="colorfeat">
       <div class="img" id="featimg" style="min-height:400px" data-img="Large photo: color 1 countertop in a kitchen"></div>
       <div class="info">
+        <span class="tag solid">Quartz</span>
         <div class="line b"></div>
-        <div class="line"></div><div class="line"></div><div class="line m"></div><div class="line s"></div>
+        <div class="feat-specs">
+          <div class="r"><span>Material</span><span>Quartz</span></div>
+          <div class="r"><span id="ctSizeLabel">Size</span><span id="ctSize">26" &times; 110"</span></div>
+        </div>
         <a class="btn solid txt" id="estimate" href="contact.html?topic=Countertops">Get an estimate</a>
+        <p class="est-hint" id="ctHint">Have your countertop measurements handy. It helps us estimate faster.</p>
       </div>
     </div>
   </section>
@@ -65,7 +77,7 @@
 </div>
 
 <footer><div class="wrap"><div class="grid g3">
-  <div><div class="logo"></div></div>
+  <div><a class="logo" href="index.html"><img src="images/Logo/Logo.png" alt="Royal Building Outlets Inc" width="1280" height="633"></a></div>
   <div><div class="line m"></div><div class="line m"></div><div class="line m"></div></div>
   <div><div class="line m"></div><div class="line s"></div><span class="icon"></span> <span class="icon"></span> <span class="icon"></span></div>
 </div></div></footer>
@@ -75,13 +87,37 @@
 (function () {
   var cards = document.querySelectorAll('#colorgrid .card');
   var img = document.getElementById('featimg');
+  var buttons = document.querySelectorAll('#ctseg button');
+  var kind = 'countertops', color = 1;
+  var KINDS = {
+    countertops: { photo: 'countertop in a kitchen', size: '26" × 110"', label: 'Size', topic: 'Countertops', hint: 'Have your countertop measurements handy. It helps us estimate faster.' },
+    islands:     { photo: 'island in a kitchen',     size: '36" × 110"<br>52" × 110"', label: 'Sizes', topic: 'Islands',     hint: 'Have your island measurements handy. It helps us estimate faster.' }
+  };
+
+  function render() {
+    var k = KINDS[kind];
+    img.setAttribute('data-img', 'Large photo: color ' + color + ' ' + k.photo);
+    var size = document.getElementById('ctSize');
+    size.innerHTML = k.size;
+    document.getElementById('ctSizeLabel').textContent = k.label;
+    document.getElementById('ctHint').textContent = k.hint;
+    document.getElementById('estimate').href = 'contact.html?topic=' + encodeURIComponent(k.topic);
+    buttons.forEach(function (b) {
+      var on = b.dataset.kind === kind;
+      b.classList.toggle('on', on); b.setAttribute('aria-selected', on);
+    });
+    cards.forEach(function (c) { c.classList.toggle('on', +c.dataset.i === color); });
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () { kind = b.dataset.kind; render(); });   // the colour you picked stays selected
+  });
   cards.forEach(function (c) {
     c.addEventListener('click', function () {
-      cards.forEach(function (x) { x.classList.toggle('on', x === c); });
-      img.setAttribute('data-img', 'Large photo: color ' + c.dataset.i + ' countertop in a kitchen');
+      color = +c.dataset.i; render();
       img.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   });
+  render();
 })();
 </script>
 <script src="motion.js"></script>

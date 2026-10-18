@@ -13,7 +13,10 @@
   var ticking = false;
   function onScroll() {
     var y = window.pageYOffset, max = document.documentElement.scrollHeight - window.innerHeight;
-    if (header) header.classList.toggle('scrolled', y > 8);
+    if (header) {                                   // two thresholds, so it can never flip back and forth around one point
+      if (y > 60) header.classList.add('scrolled');
+      else if (y < 20) header.classList.remove('scrolled');
+    }
     bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0) + ')';
     layers.forEach(function (el) {
       var r = el.getBoundingClientRect();

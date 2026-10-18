@@ -86,9 +86,9 @@ nav a.here { color: #17171a; background: var(--grad); }
 .check { width: 18px; height: 18px; border: 1.5px solid var(--orange); border-radius: 5px; flex: none; background: #fff; }
 .filters .line { margin: 0; }
 
-/* footer (flyer black as the one dark anchor) */
-footer { margin-top: 80px; padding: 48px 0; background: var(--ink); color: #fff; }
-footer .logo { background: transparent; }
+/* footer: light, so the logo matches the header */
+footer { margin-top: 80px; padding: 48px 0; background: #000; color: #fff; }
+footer .logo { background: none; }
 footer .line { background: #34343a; }
 footer .icon { background: transparent; }
 
@@ -300,3 +300,26 @@ button.btn:disabled { opacity: .6; cursor: wait; }
 
 .loc-name { font-size: 18px; font-weight: 700; letter-spacing: -.2px; margin: 16px 0 0; }
 .box > .loc-name:first-child { margin-top: 0; }
+
+/* estimate hints */
+.fhint { font-size: 13px; color: var(--muted); margin: -8px 0 18px; }
+.est-hint { margin: 12px 0 0; font-size: 13px; color: var(--muted); }
+.nudge { animation: nudge 1.6s ease 2; }
+@keyframes nudge { 0%, 100% { box-shadow: 0 0 0 0 rgba(245,178,27,0); border-color: var(--border); } 50% { box-shadow: 0 0 0 5px rgba(245,178,27,.35); border-color: var(--orange); } }
+
+/* real logo */
+.logo, .logo:hover { width: auto; height: auto; border: 0; background: none; border-radius: 0; display: block; }
+.logo::after { display: none; }
+.logo img { display: block; height: 72px; width: auto; transform-origin: left center; transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+header { padding: 10px 0; }
+header.scrolled .logo img { transform: scale(.78); }   /* scale, not resize: no layout shift while scrolling */
+footer .logo { background: none; }
+footer .logo img { height: 104px; }
+@media (max-width: 760px) { .logo img { height: 56px; } footer .logo img { height: 84px; } }
+
+/* countertops / islands switch */
+.seg { display: inline-flex; padding: 4px; gap: 4px; background: var(--surface2); border: 1px solid var(--border); border-radius: 999px; }
+.seg button { font: inherit; font-size: 14px; font-weight: 600; color: var(--muted); background: transparent; border: 0; border-radius: 999px; padding: 10px 24px; cursor: pointer; transition: background .25s ease, color .25s ease, box-shadow .25s ease; }
+.seg button:hover { color: var(--text); }
+.seg button.on { background: var(--grad); color: #17171a; box-shadow: 0 6px 16px -8px rgba(232,103,43,.7); }
+.ph { display: inline-block; width: 80px; height: 10px; border-radius: 5px; background: #e6e2d9; vertical-align: middle; }

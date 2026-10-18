@@ -1,9 +1,9 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Wireframe - Vinyl</title><link rel="stylesheet" href="style.css"></head><body>
+<title>Wireframe - Vinyl</title><link rel="stylesheet" href="style.css"><link rel="icon" type="image/png" href="images/Logo/Logo.png"></head><body>
 
 <header><div class="wrap">
-  <div class="logo"></div>
+  <a class="logo" href="index.html"><img src="images/Logo/logo-light.png" alt="Royal Building Outlets Inc" width="1280" height="633"></a>
   <nav>
     <a href="index.html">Home</a>
     <a class="here" href="vinyl.html">Vinyl</a>
@@ -36,7 +36,7 @@
       <div class="img" id="featimg" style="min-height:440px" data-img="Large photo: color 1 vinyl plank in a room"></div>
       <div class="info">
         <span class="tag solid">8mm</span>
-        <div class="line b"></div>
+        <div class="bb-code" id="colorName" style="margin-top:14px">7017-12</div>
         <div class="feat-specs">
           <div class="r"><span>Thickness</span><span>8mm</span></div>
           <div class="r"><span>Wear layer</span><span>20 mil</span></div>
@@ -44,6 +44,7 @@
         </div>
         <div class="badges"><span class="badge">Scratch resistant</span><span class="badge">Waterproof</span></div>
         <a class="btn solid txt" id="estimate" href="contact.html?topic=Vinyl%20flooring">Get an estimate</a>
+        <p class="est-hint">Have your square footage handy. It helps us estimate faster.</p>
       </div>
     </div>
   </section>
@@ -53,25 +54,24 @@
   <!-- all colors -->
   <section>
     <div class="grid g4 colorgrid" id="colorgrid">
-      <div class="card on" data-i="1"><div class="img sq" data-img="Color 1: vinyl plank sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="2"><div class="img sq" data-img="Color 2: vinyl plank sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="3"><div class="img sq" data-img="Color 3: vinyl plank sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="4"><div class="img sq" data-img="Color 4: vinyl plank sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="5"><div class="img sq" data-img="Color 5: vinyl plank sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="6"><div class="img sq" data-img="Color 6: vinyl plank sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="7"><div class="img sq" data-img="Color 7: vinyl plank sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="8"><div class="img sq" data-img="Color 8: vinyl plank sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="9"><div class="img sq" data-img="Color 9: vinyl plank sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="10"><div class="img sq" data-img="Color 10: vinyl plank sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="11"><div class="img sq" data-img="Color 11: vinyl plank sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="12"><div class="img sq" data-img="Color 12: vinyl plank sample"></div><div class="line b"></div></div>
+      <div class="card on" data-i="1" data-name="7017-12"><div class="img sq" data-img="7017-12: vinyl plank sample"></div><div class="pfname">7017-12</div></div>
+      <div class="card" data-i="2" data-name="7017-5"><div class="img sq" data-img="7017-5: vinyl plank sample"></div><div class="pfname">7017-5</div></div>
+      <div class="card" data-i="3" data-name="R51"><div class="img sq" data-img="R51: vinyl plank sample"></div><div class="pfname">R51</div></div>
+      <div class="card" data-i="4" data-name="R52"><div class="img sq" data-img="R52: vinyl plank sample"></div><div class="pfname">R52</div></div>
+      <div class="card" data-i="5" data-name="R53"><div class="img sq" data-img="R53: vinyl plank sample"></div><div class="pfname">R53</div></div>
+      <div class="card" data-i="6" data-name="R54"><div class="img sq" data-img="R54: vinyl plank sample"></div><div class="pfname">R54</div></div>
+      <div class="card" data-i="7" data-name="R55"><div class="img sq" data-img="R55: vinyl plank sample"></div><div class="pfname">R55</div></div>
+      <div class="card" data-i="8" data-name="R56"><div class="img sq" data-img="R56: vinyl plank sample"></div><div class="pfname">R56</div></div>
+      <div class="card" data-i="9" data-name="R57"><div class="img sq" data-img="R57: vinyl plank sample"></div><div class="pfname">R57</div></div>
+      <div class="card" data-i="10" data-name="R58"><div class="img sq" data-img="R58: vinyl plank sample"></div><div class="pfname">R58</div></div>
+      <div class="card" data-i="11" data-name="R59"><div class="img sq" data-img="R59: vinyl plank sample"></div><div class="pfname">R59</div></div>
     </div>
   </section>
 
 </div>
 
 <footer><div class="wrap"><div class="grid g3">
-  <div><div class="logo"></div></div>
+  <div><a class="logo" href="index.html"><img src="images/Logo/Logo.png" alt="Royal Building Outlets Inc" width="1280" height="633"></a></div>
   <div><div class="line m"></div><div class="line m"></div><div class="line m"></div></div>
   <div><div class="line m"></div><div class="line s"></div><span class="icon"></span> <span class="icon"></span> <span class="icon"></span></div>
 </div></div></footer>
@@ -81,13 +81,23 @@
 (function () {
   var cards = document.querySelectorAll('#colorgrid .card');
   var img = document.getElementById('featimg');
+  var nameEl = document.getElementById('colorName');
+  var estimate = document.getElementById('estimate');
+
+  function pick(c) {
+    var name = c.dataset.name;
+    cards.forEach(function (x) { x.classList.toggle('on', x === c); });
+    nameEl.textContent = name;
+    img.setAttribute('data-img', 'Large photo: ' + name + ' vinyl plank in a room');
+    estimate.href = 'contact.html?topic=Vinyl%20flooring&item=' + encodeURIComponent(name);
+  }
   cards.forEach(function (c) {
     c.addEventListener('click', function () {
-      cards.forEach(function (x) { x.classList.toggle('on', x === c); });
-      img.setAttribute('data-img', 'Large photo: color ' + c.dataset.i + ' vinyl plank in a room');
+      pick(c);
       img.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   });
+  pick(cards[0]);
 })();
 </script>
 <script src="motion.js"></script>

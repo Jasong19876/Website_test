@@ -1,9 +1,9 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Wireframe - Contact</title><link rel="stylesheet" href="style.css"></head><body>
+<title>Wireframe - Contact</title><link rel="stylesheet" href="style.css"><link rel="icon" type="image/png" href="images/Logo/Logo.png"></head><body>
 
 <header><div class="wrap">
-  <div class="logo"></div>
+  <a class="logo" href="index.html"><img src="images/Logo/logo-light.png" alt="Royal Building Outlets Inc" width="1280" height="633"></a>
   <nav>
     <a href="index.html">Home</a>
     <a href="vinyl.html">Vinyl</a>
@@ -55,10 +55,13 @@
             <label class="flabel" for="c-topic">Interested in</label>
             <select class="field" id="c-topic" name="interested_in">
               <option>Vinyl flooring</option><option>Laminate flooring</option><option>Cabinets</option>
-              <option>Countertops</option><option>Baseboards</option><option>Wall panels</option><option>Not sure yet</option>
+              <option>Countertops</option><option>Islands</option><option>Baseboards</option><option>Wall panels</option><option>Not sure yet</option>
             </select>
           </div>
         </div>
+        <label class="flabel" for="c-size" id="c-size-label">Square feet needed (optional)</label>
+        <input class="field" id="c-size" name="size_needed" type="text" inputmode="decimal" placeholder="e.g. 450" autocomplete="off">
+        <div class="fhint" id="c-size-hint">Adding your square footage helps us give you a more accurate estimate.</div>
         <label class="flabel" for="c-msg">Message</label>
         <textarea class="field area" id="c-msg" name="message" required></textarea>
         <button type="submit" class="btn solid txt">Send message</button>
@@ -76,7 +79,7 @@
 </div>
 
 <footer><div class="wrap"><div class="grid g3">
-  <div><div class="logo"></div></div>
+  <div><a class="logo" href="index.html"><img src="images/Logo/Logo.png" alt="Royal Building Outlets Inc" width="1280" height="633"></a></div>
   <div><div class="line m"></div><div class="line m"></div><div class="line m"></div></div>
   <div><div class="line m"></div><div class="line s"></div><span class="icon"></span> <span class="icon"></span> <span class="icon"></span></div>
 </div></div></footer>
