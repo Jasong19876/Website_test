@@ -210,6 +210,11 @@ nav .menu a:hover, .menu a:hover { background: var(--surface2); }
 .pfsub b { color: var(--orange-deep); font-weight: 600; }
 
 
+/* real photos in the picture slots; the dashed placeholder label is hidden once a photo is set */
+.img.photo { background-color: #111; background-repeat: no-repeat; background-position: center; background-size: cover; }
+.viewer-ph.photo { background-size: contain; }
+.img.photo::after { display: none; }
+
 /* darker 3D viewer so light baseboards stand out */
 .viewer.dark { background-color: #1b1b1f; background-image: radial-gradient(#3a3a42 1px, transparent 1px), radial-gradient(120% 90% at 50% 0%, #2c2c33 0%, #17171a 100%); background-size: 22px 22px, 100% 100%; border-color: #17171a; }
 

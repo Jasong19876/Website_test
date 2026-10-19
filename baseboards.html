@@ -49,8 +49,8 @@
         </div>
         <div class="thumbs" id="thumbs">
           <div class="img on" data-p="1" data-img="3D model"></div>
-          <div class="img" data-p="2" data-img="Photo: up close"></div>
-          <div class="img" data-p="3" data-img="Photo: corner joint"></div>
+          <div class="img" data-p="2" data-img="Photo: this profile"></div>
+          <div class="img" data-p="3" data-img="Photo: display board"></div>
         </div>
         <a class="btn solid txt" id="estimate" href="contact.html?topic=Baseboards">Get an estimate</a>
         <p class="est-hint">Have your wall lengths handy. It helps us estimate faster.</p>
@@ -87,6 +87,8 @@
   var COLONIAL_D = [[1,0],[1,.36],[.86,.40],[.78,.46],[.78,.56],[.94,.62],[1,.70],[.94,.78],[.80,.82],[.80,.90],[.92,.96],[.96,1]];
   var CASE_A = [[1,0],[1,.10],[.94,.13],[.78,.19],[.62,.30],[.56,.44],[.62,.56],[.78,.64],[.94,.70],[1,.75],[1,.80],[.90,.84],[.78,.86],[.78,.92],[.90,.96],[1,1]];
   var CASE_B = [[1,0],[1,.09],[.94,.12],[.78,.17],[.62,.27],[.55,.42],[.60,.56],[.76,.66],[.92,.72],[1,.77],[1,.82],[.90,.86],[.78,.88],[.78,.93],[.92,.97],[1,1]];
+  /* B13-12-512 has the same ornate top as B13-12-400 but a taller flat face (about 72% flat in the photo) */
+  var COLONIAL_A2 = COLONIAL_A.map(function (q) { return q[1] > .62 ? [q[0], .72 + (q[1] - .62) * (.28 / .38)] : q; });
   var SHOE = [[1,0],[1,.35]], QR = [[1,0]], k, th;
   for (k = 0; k <= 12; k++) { th = k / 12 * Math.PI / 2; SHOE.push([.15 + .85 * Math.cos(th), .35 + .65 * Math.sin(th)]); }
   for (k = 1; k <= 16; k++) { th = k / 16 * Math.PI / 2; QR.push([Math.cos(th), Math.sin(th)]); }
@@ -105,7 +107,7 @@
     { c:'B54-14-500', t:.5625, h:5,       ts:'9/16"', hs:'5"',     L:"16'", f:COLONIAL_B },
     { c:'B33-14-212', t:.5625, h:2.5,     ts:'9/16"', hs:'2-1/2"', L:"17'", f:FLAT },
     { c:'B54-14-378', t:.5625, h:3.875,   ts:'9/16"', hs:'3-7/8"', L:"16'", f:COLONIAL_C },
-    { c:'B13-12-512', t:.5,    h:5.5,     ts:'1/2"',  hs:'5-1/2"', L:"16'", f:COLONIAL_A },
+    { c:'B13-12-512', t:.5,    h:5.5,     ts:'1/2"',  hs:'5-1/2"', L:"16'", f:COLONIAL_A2 },
     { c:'B98-11-2132',n:'Base Shoe',     t:.4375, h:.65625, ts:'7/16"',  hs:'21/32"', L:'—', f:SHOE },
     { c:'B41-14-212', t:.5625, h:2.5,     ts:'9/16"', hs:'2-1/2"', L:"17'", f:COLONIAL_D },
     { c:'B99-16-2132',n:'Quarter Round', t:.65625,h:.65625, ts:'21/32"', hs:'21/32"', L:'—', f:QR }
@@ -188,7 +190,16 @@
   /* ---------- selection ---------- */
   var cards = grid.querySelectorAll('.card'), thumbs = document.querySelectorAll('#thumbs .img');
   var cur = 0, photo = 1;
-  var views = { 2: 'up close', 3: 'corner joint' };
+  /* photos: slot 2 is the profile's own photo (images/Baseboard/web/<code>.jpg), slot 3 is the sample display board.
+     B33-14-212 has no photo yet, so slot 2 falls back to the placeholder for it. */
+  var DIR = 'images/Baseboard/web/';
+  var NOPHOTO = { 'B33-14-212': 1 };
+  var BOARD = DIR + 'board-overview.jpg';
+  function photoUrl(p, slot) { return slot === 3 ? BOARD : (NOPHOTO[p.c] ? '' : DIR + p.c + '.jpg'); }
+  thumbs.forEach(function (t) {
+    t.classList.add('photoslot');   // thumbnails get their picture in render()
+  });
+  var views = { 2: 'this profile', 3: 'display board' };
 
   function render() {
     var p = P[cur];
@@ -204,6 +215,14 @@
     var show3d = photo === 1 && ok;
     box.style.display = show3d ? '' : 'none';
     ph.style.display = show3d ? 'none' : '';
+    thumbs.forEach(function (t) {   // thumbnails: 2 = this profile's photo, 3 = display board (1 stays the 3D tile)
+      var u = +t.dataset.p > 1 ? photoUrl(p, +t.dataset.p) : '';
+      t.style.backgroundImage = u ? 'url("' + u + '")' : '';
+      t.classList.toggle('photo', !!u);
+    });
+    var url = photo > 1 ? photoUrl(p, photo) : '';
+    ph.style.backgroundImage = url ? 'url("' + url + '")' : '';
+    ph.classList.toggle('photo', !!url);
     if (!show3d) ph.setAttribute('data-img', photo === 1 ? '3D view needs WebGL' : 'Photo: ' + p.c + ', ' + views[photo]);
     if (show3d) size();
   }
