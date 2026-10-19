@@ -213,6 +213,9 @@ nav .menu a:hover, .menu a:hover { background: var(--surface2); }
 /* real photos in the picture slots; the dashed placeholder label is hidden once a photo is set */
 .img.photo { background-color: #111; background-repeat: no-repeat; background-position: center; background-size: cover; }
 .viewer-ph.photo { background-size: contain; }
+/* room photos: lighter backdrop, and keep the floor and furniture in frame when a wide slot crops the image */
+.img.banner.photo, .img.hero.photo, .img.xl.photo { background-color: var(--surface2); background-position: center 58%; }
+.img.banner.photo { min-height: 320px; }
 .img.photo::after { display: none; }
 
 /* darker 3D viewer so light baseboards stand out */
