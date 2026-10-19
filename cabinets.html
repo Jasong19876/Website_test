@@ -50,10 +50,10 @@
 
       <div id="detail" style="display:none">
         <!-- 3D MODEL GOES HERE: sized to fit the page (about 55% of screen height) -->
-        <div class="viewer">
+        <div class="viewer" id="cabview">
+          <canvas id="cabcanvas"></canvas>
           <div class="model" id="modelmark"></div>
-          <div class="rot"></div>
-          <div class="ctrl"><span></span><span></span><span></span></div>
+          <div class="hint" id="cabhint">Drag to rotate &middot; scroll to zoom</div>
         </div>
 
         <!-- SPECS GO HERE -->
@@ -75,6 +75,9 @@
 </div></div></footer>
 <a class="chat" href="contact.html" aria-label="Send us a message"></a>
 
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/ColladaLoader.js"></script>
 <script>
 (function () {
   var names = {};
@@ -95,6 +98,90 @@
   var list = document.getElementById('cablist');
   var detail = document.getElementById('detail');
   var mark = document.getElementById('modelmark');
+
+  /* ---------- 3D viewer ----------
+     To add a model: export the cabinet from 20-20 as Collada, save it as images/Cabinets/<CODE>.dae
+     (with its texture .jpg files beside it) and add the code to this list. */
+  var MODELS = { 'B09': 'images/Cabinets/B09.dae' };
+  var cache = {}, token = 0, current = null;
+  var view = document.getElementById('cabview'), canvas = document.getElementById('cabcanvas'), hint = document.getElementById('cabhint');
+  var renderer, scene, camera, controls, ok = false;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(32, 1, 1, 5000);
+    controls = new THREE.OrbitControls(camera, canvas);
+    controls.enableDamping = true; controls.autoRotate = true; controls.autoRotateSpeed = 1.4; controls.enablePan = false;
+    controls.addEventListener('start', function () { controls.autoRotate = false; });
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xd8cdb4, .6));
+    var dl = new THREE.DirectionalLight(0xffffff, .5); dl.position.set(60, 120, 90); scene.add(dl);
+    var dl2 = new THREE.DirectionalLight(0xffe6b8, .35); dl2.position.set(-80, 30, -60); scene.add(dl2);
+    ok = true;
+  } catch (e) { ok = false; }
+
+  function size() {
+    if (!ok) return;
+    var w = view.clientWidth, h = view.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+  }
+  if (window.ResizeObserver) new ResizeObserver(size).observe(view); else window.addEventListener('resize', size);
+  (function loop() { requestAnimationFrame(loop); if (ok && current) { controls.update(); renderer.render(scene, camera); } })();
+
+  function placeholder(text) {
+    if (current) { scene.remove(current); current = null; }
+    mark.textContent = text; mark.style.display = ''; canvas.style.display = 'none'; hint.style.display = 'none';
+  }
+  function fit(obj) {
+    var box = new THREE.Box3().setFromObject(obj), c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3());
+    obj.position.sub(c);                       // centre the cabinet on the origin
+    var r = s.length() / 2, dist = r * 3.3;
+    camera.position.set(.5 * dist, .35 * dist, 1.0 * dist);   // looks at the front first
+    controls.target.set(0, 0, 0);
+    camera.near = r / 50; camera.far = r * 50; camera.updateProjectionMatrix();   // the model is only about a metre across
+    controls.minDistance = r * 1.2; controls.maxDistance = r * 6;
+    controls.autoRotate = true; controls.update();
+  }
+  function show3d(obj) {
+    if (current) scene.remove(current);
+    current = obj; scene.add(obj); fit(obj);
+    mark.style.display = 'none'; canvas.style.display = ''; hint.style.display = ''; size();
+  }
+  /* a missing texture file leaves the surface white, so use a wood colour instead */
+  function fixMaterials(obj) {
+    var drop = [];
+    obj.traverse(function (o) {
+      if (/^(floor|ceiling)$/i.test(o.name)) drop.push(o);   // 20-20 adds a room floor and ceiling around the cabinet
+      if (!o.isMesh) return;
+      (Array.isArray(o.material) ? o.material : [o.material]).forEach(function (m) {
+        if (m.map && !(m.map.image && m.map.image.naturalWidth > 0)) { m.map = null; m.color.set(0xcfb287); m.needsUpdate = true; }
+        if (m.normalMap && !(m.normalMap.image && m.normalMap.image.naturalWidth > 0)) { m.normalMap = null; m.needsUpdate = true; }
+      });
+    });
+    drop.forEach(function (o) { if (o.parent) o.parent.remove(o); });
+  }
+  function loadModel(code) {
+    var my = ++token;
+    if (!ok) { placeholder('3D view needs WebGL'); return; }
+    if (!MODELS[code]) { placeholder('3D model for ' + code + ' coming soon'); return; }
+    if (cache[code]) { show3d(cache[code]); return; }
+    placeholder('Loading 3D model...');
+    var url = MODELS[code], base = url.slice(0, url.lastIndexOf('/') + 1);
+    var fail = function () { if (my === token) placeholder('Could not load the 3D model for ' + code); };
+    fetch(url).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (xml) {
+      // 20-20 exports its lights in a form the loader can't read, and we use our own lights anyway
+      xml = xml.replace(/<library_lights>[\s\S]*?<\/library_lights>/g, '').replace(/<instance_light[^>]*\/>/g, '');
+      var mgr = new THREE.LoadingManager();
+      var obj = new THREE.ColladaLoader(mgr).parse(xml, base).scene;
+      var finish = function () {
+        fixMaterials(obj); cache[code] = obj;
+        if (my === token) show3d(obj);
+      };
+      // wait for the textures (or their errors) before showing
+      if (mgr.itemsLoaded >= mgr.itemsTotal) finish(); else mgr.onLoad = finish;
+    }).catch(fail);
+  }
 
 
 
@@ -119,9 +206,8 @@
 
   function showCab(code) {
     list.querySelectorAll('.item').forEach(function (i) { i.classList.toggle('on', i.dataset.code === code); });
-    mark.textContent = '3D model: ' + code + ' (drag to rotate 360°)';
     detail.style.display = code ? 'block' : 'none';
-    if (code) fillSpecs(code);
+    if (code) { fillSpecs(code); loadModel(code); }
   }
   function renderList(slug) {
     list.innerHTML = '';

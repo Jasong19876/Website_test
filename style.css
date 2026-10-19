@@ -87,7 +87,11 @@ nav a.here { color: #17171a; background: var(--grad); }
 .filters .line { margin: 0; }
 
 /* footer: light, so the logo matches the header */
-footer { margin-top: 80px; padding: 48px 0; background: #000; color: #fff; }
+/* sticky footer: on short pages the page grows to the screen height and the footer sits at the bottom */
+body { min-height: 100vh; display: flex; flex-direction: column; }
+body > .wrap { width: 100%; }
+body > :has(+ footer) { margin-bottom: 80px; }
+footer { margin-top: auto; padding: 48px 0; background: #000; color: #fff; }
 footer .logo { background: none; }
 footer .line { background: #34343a; }
 footer .icon { background: transparent; }
