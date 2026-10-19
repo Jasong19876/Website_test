@@ -216,6 +216,14 @@ nav .menu a:hover, .menu a:hover { background: var(--surface2); }
 /* room photos: lighter backdrop, and keep the floor and furniture in frame when a wide slot crops the image */
 .img.banner.photo, .img.hero.photo, .img.xl.photo { background-color: var(--surface2); background-position: center 58%; }
 .img.banner.photo { min-height: 320px; }
+
+/* about page: statement over a room photo */
+.about-hero { display: flex; align-items: center; justify-content: center; text-align: center; min-height: 420px; padding: 56px 28px; border-radius: 24px; color: #fff;
+  background: linear-gradient(rgba(17,17,19,.62), rgba(17,17,19,.62)), var(--about-img) center 58% / cover no-repeat, #2a2a2e; }
+.about-hero h1 { margin: 0 0 18px; font-size: clamp(30px, 5vw, 48px); font-weight: 600; letter-spacing: -1px; line-height: 1.15; }
+.about-hero p { margin: 0 auto; max-width: 62ch; font-size: 18px; line-height: 1.65; }
+.about-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.about-links .btn { margin: 0; }
 .img.photo::after { display: none; }
 
 /* darker 3D viewer so light baseboards stand out */
