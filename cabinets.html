@@ -50,7 +50,7 @@
 
       <div id="detail" style="display:none">
         <!-- 3D MODEL GOES HERE: sized to fit the page (about 55% of screen height) -->
-        <div class="viewer" id="cabview">
+        <div class="viewer dark" id="cabview">
           <canvas id="cabcanvas"></canvas>
           <div class="model" id="modelmark"></div>
           <div class="hint" id="cabhint">Drag to rotate &middot; scroll to zoom</div>
@@ -114,9 +114,11 @@
     controls = new THREE.OrbitControls(camera, canvas);
     controls.enableDamping = true; controls.autoRotate = true; controls.autoRotateSpeed = 1.4; controls.enablePan = false;
     controls.addEventListener('start', function () { controls.autoRotate = false; });
-    scene.add(new THREE.HemisphereLight(0xffffff, 0xd8cdb4, .6));
-    var dl = new THREE.DirectionalLight(0xffffff, .5); dl.position.set(60, 120, 90); scene.add(dl);
-    var dl2 = new THREE.DirectionalLight(0xffe6b8, .35); dl2.position.set(-80, 30, -60); scene.add(dl2);
+    // three-point lighting: soft sky fill, a warm key from the front right, a cool fill from the left, a rim light from behind
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8478, .55));
+    var key = new THREE.DirectionalLight(0xfff1dc, .95); key.position.set(90, 120, 110); scene.add(key);
+    var fill = new THREE.DirectionalLight(0xdfe8ff, .4); fill.position.set(-100, 40, 80); scene.add(fill);
+    var rim = new THREE.DirectionalLight(0xffffff, .5); rim.position.set(-30, 90, -120); scene.add(rim);
     ok = true;
   } catch (e) { ok = false; }
 
@@ -155,7 +157,7 @@
       if (/^(floor|ceiling)$/i.test(o.name)) drop.push(o);   // 20-20 adds a room floor and ceiling around the cabinet
       if (!o.isMesh) return;
       (Array.isArray(o.material) ? o.material : [o.material]).forEach(function (m) {
-        if (m.map && !(m.map.image && m.map.image.naturalWidth > 0)) { m.map = null; m.color.set(0xcfb287); m.needsUpdate = true; }
+        if (m.map && !(m.map.image && m.map.image.naturalWidth > 0)) { m.map = null; m.color.set(0xf6f5f2); if (m.specular) { m.specular.set(0x2a2a2a); m.shininess = 28; } m.needsUpdate = true; }
         if (m.normalMap && !(m.normalMap.image && m.normalMap.image.naturalWidth > 0)) { m.normalMap = null; m.needsUpdate = true; }
       });
     });
