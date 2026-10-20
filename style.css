@@ -189,6 +189,7 @@ nav .menu a:hover, .menu a:hover { background: var(--surface2); }
   section { margin: 44px 0; }
   .img.hero { min-height: 300px; }
   .cablist { position: static; }
+  .browser #detail { order: -1; }   /* phones: 3D model and specs above the cabinet list */
 }
 
 /* baseboards: 3D profile viewer + profile grid */

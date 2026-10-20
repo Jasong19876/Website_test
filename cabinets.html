@@ -220,7 +220,11 @@
       var d = document.createElement('div');
       d.className = 'item'; d.dataset.code = code; d.style.setProperty('--i', Math.min(idx, 14));
       d.innerHTML = '<div class="thumb"></div><div><div class="name">' + code + '</div>' + fmtLine(code) + '</div>';
-      d.addEventListener('click', function () { showCab(code); });
+      d.addEventListener('click', function () {
+        showCab(code);
+        // on phones the model sits above the list, so bring it back into view after a pick
+        if (window.matchMedia('(max-width: 760px)').matches) document.getElementById('cabview').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
       list.appendChild(d);
     });
     showCab(CABS[slug][0]);
