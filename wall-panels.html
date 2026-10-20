@@ -19,9 +19,21 @@
         <a href="cabinets.html#corner">Corner</a>
       </div>
     </div>
-    <a href="countertops.html">Countertops</a>
+    <div class="dd">
+      <a href="countertops.html">Countertops</a>
+      <div class="menu">
+        <a href="countertops.html#countertops">Countertops</a>
+        <a href="countertops.html#islands">Islands</a>
+      </div>
+    </div>
     <a href="baseboards.html">Baseboards</a>
-    <a class="here" href="wall-panels.html">Wall Panels</a>
+    <div class="dd">
+      <a class="here" href="wall-panels.html">Wall Panels</a>
+      <div class="menu">
+        <a href="wall-panels.html#wall">Wall Panels</a>
+        <a href="wall-panels.html#shower">Shower Panels</a>
+      </div>
+    </div>
     <a href="about.html">About</a>
     <a href="locations.html">Locations</a>
     <a href="contact.html">Contact</a>
@@ -29,23 +41,30 @@
 </div></header>
 
 <div class="wrap">
-  <section><div class="img banner" data-img="Wide banner: room with wall panels installed"></div></section>
+  <section><div class="img banner" id="banner" data-img="Wide banner: room with wall panels installed"></div></section>
+
+  <section style="margin-bottom:0">
+    <div class="seg" id="wpseg" role="tablist" aria-label="Wall panels or shower panels">
+      <button type="button" class="on" data-kind="wall" role="tab" aria-selected="true">Wall Panels</button>
+      <button type="button" data-kind="shower" role="tab" aria-selected="false">Shower Panels</button>
+    </div>
+  </section>
 
   <!-- selected color: image left, name + description right -->
   <section>
     <div class="colorfeat">
       <div class="img" id="featimg" style="min-height:400px" data-img="Large photo: color 1 wall panel on a finished wall"></div>
       <div class="info">
-        <span class="tag solid">Acoustic</span>
+        <span class="tag solid" id="wpTag">Acoustic</span>
         <div class="line b"></div>
-        <div class="feat-specs">
+        <div class="feat-specs" id="wpSpecs">
           <div class="r"><span>Length</span><span>106.3"</span></div>
           <div class="r"><span>Width</span><span>20.47"</span></div>
           <div class="r"><span>Thickness</span><span>0.78"</span></div>
         </div>
-        <div class="badges"><span class="badge">Reduces echoes and noise</span><span class="badge">Durable</span><span class="badge">Easy installation</span></div>
+        <div class="badges" id="wpBadges"><span class="badge">Reduces echoes and noise</span><span class="badge">Durable</span><span class="badge">Easy installation</span></div>
         <a class="btn solid txt" id="estimate" href="contact.html?topic=Wall%20panels">Get an estimate</a>
-        <p class="est-hint">Have your wall measurements handy. It helps us estimate faster.</p>
+        <p class="est-hint" id="wpHint">Have your wall measurements handy. It helps us estimate faster.</p>
       </div>
     </div>
   </section>
@@ -70,7 +89,7 @@
 <footer><div class="wrap"><div class="grid g3">
   <div><a class="logo" href="index.html"><img src="images/Logo/Logo.png" alt="Royal Building Outlets Inc" width="1280" height="633"></a></div>
   <div><div class="line m"></div><div class="line m"></div><div class="line m"></div></div>
-  <div><div class="line m"></div><div class="line s"></div><span class="icon"></span> <span class="icon"></span> <span class="icon"></span></div>
+  <div><div class="line m"></div><div class="line s"></div><span class="social"><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg></a><a href="https://www.facebook.com/people/Royal-Build/pfbid0Puxi76APLGJigcukLMW54oCZdmjU9fzhBERXR9j2Nn4Rtbv2d5swnHq3gfGUP66rl/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.6-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H8v3h2.6V21h2.9z"/></svg></a></span></div>
 </div></div></footer>
 <a class="chat" href="contact.html" aria-label="Send us a message"></a>
 
@@ -78,13 +97,50 @@
 (function () {
   var cards = document.querySelectorAll('#colorgrid .card');
   var img = document.getElementById('featimg');
+  var buttons = document.querySelectorAll('#wpseg button');
+  var kind = 'wall', color = 1;
+  function specs(rows) { return rows.map(function (r) { return '<div class="r"><span>' + r[0] + '</span><span>' + r[1] + '</span></div>'; }).join(''); }
+  function badges(list) { return list.map(function (b) { return '<span class="badge">' + b + '</span>'; }).join(''); }
+  /* Shower panel specs, badges and photos are placeholders until the real product details are added. */
+  var KINDS = {
+    wall:   { banner: 'Wide banner: room with wall panels installed', photo: 'wall panel on a finished wall', tag: 'Acoustic', topic: 'Wall panels',
+              specs: specs([['Length', '106.3"'], ['Width', '20.47"'], ['Thickness', '0.78"']]),
+              badges: badges(['Reduces echoes and noise', 'Durable', 'Easy installation']),
+              hint: 'Have your wall measurements handy. It helps us estimate faster.' },
+    shower: { banner: 'Wide banner: shower with panels installed', photo: 'shower panel in a finished shower', tag: 'Shower', topic: 'Shower panels',
+              specs: specs([['Length', '—'], ['Width', '—'], ['Thickness', '—']]),
+              badges: badges(['Waterproof', 'Easy to clean', 'Easy installation']),
+              hint: 'Have your shower wall measurements handy. It helps us estimate faster.' }
+  };
+
+  function render() {
+    var k = KINDS[kind];
+    document.getElementById('banner').setAttribute('data-img', k.banner);
+    img.setAttribute('data-img', 'Large photo: color ' + color + ' ' + k.photo);
+    document.getElementById('wpTag').textContent = k.tag;
+    document.getElementById('wpSpecs').innerHTML = k.specs;
+    document.getElementById('wpBadges').innerHTML = k.badges;
+    document.getElementById('wpHint').textContent = k.hint;
+    document.getElementById('estimate').href = 'contact.html?topic=' + encodeURIComponent(k.topic);
+    buttons.forEach(function (b) {
+      var on = b.dataset.kind === kind;
+      b.classList.toggle('on', on); b.setAttribute('aria-selected', on);
+    });
+    cards.forEach(function (c) { c.classList.toggle('on', +c.dataset.i === color); });
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () { location.hash = b.dataset.kind; });
+  });
   cards.forEach(function (c) {
     c.addEventListener('click', function () {
-      cards.forEach(function (x) { x.classList.toggle('on', x === c); });
-      img.setAttribute('data-img', 'Large photo: color ' + c.dataset.i + ' wall panel on a finished wall');
+      color = +c.dataset.i; render();
       img.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   });
+  /* the nav dropdown links here with #islands / #shower etc.; the switch sets the same hash */
+  function fromHash() { var h = location.hash.slice(1); if (KINDS[h]) kind = h; render(); }
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
 })();
 </script>
 <script src="motion.js"></script>

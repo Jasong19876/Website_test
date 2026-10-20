@@ -4,6 +4,7 @@ var SIZE_BY_TOPIC = {
   'Vinyl flooring':   { label: 'Square feet needed (optional)', unit: 'sq ft', hint: 'Adding your square footage helps us give you a more accurate estimate.' },
   'Laminate flooring':{ label: 'Square feet needed (optional)', unit: 'sq ft', hint: 'Adding your square footage helps us give you a more accurate estimate.' },
   'Wall panels':      { label: 'Wall area in square feet (optional)', unit: 'sq ft', hint: 'Measure the wall height times width. The more exact, the better the estimate.' },
+  'Shower panels':    { label: 'Shower wall area in square feet (optional)', unit: 'sq ft', hint: 'Measure the height and width of each wall you want covered.' },
   'Countertops':      { label: 'Countertop area in square feet (optional)', unit: 'sq ft', hint: 'Length times depth of each counter, added together, is a good start.' },
   'Islands':          { label: 'Island size or area (optional)', unit: 'sq ft', hint: 'Tell us the size you have in mind, or measure the space where it will go.' },
   'Baseboards':       { label: 'Linear feet needed (optional)', unit: 'linear ft', hint: 'Add up the length of every wall that needs baseboard.' },

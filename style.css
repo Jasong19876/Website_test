@@ -33,7 +33,6 @@ header .wrap { display: flex; justify-content: space-between; align-items: cente
 nav { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 nav a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: 999px; transition: color .15s, background .15s; }
 nav a:hover { color: var(--text); background: var(--surface2); }
-nav a[href="baseboards.html"] { display: none; }   /* Baseboards tab hidden for now: delete this line to bring it back */
 nav a.here { color: #17171a; background: var(--grad); }
 .icon { display: inline-block; width: 28px; height: 28px; border: 2px solid var(--gold); border-radius: 50%; margin-right: 6px; vertical-align: middle; background: #fff; }
 
@@ -96,12 +95,16 @@ footer { margin-top: auto; padding: 48px 0; background: #000; color: #fff; }
 footer .logo { background: none; }
 footer .line { background: #34343a; }
 footer .icon { background: transparent; }
+/* social icons in the footer */
+.social { display: inline-flex; gap: 10px; vertical-align: middle; }
+.social a { width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; border: 2px solid var(--gold); border-radius: 50%; color: #fff; transition: background .2s, color .2s, transform .2s; }
+.social a:hover { background: var(--gold); color: #111113; transform: translateY(-2px); }
+.social svg { width: 18px; height: 18px; }
 
 /* floating message button */
 .chat { position: fixed; right: 24px; bottom: 24px; width: 60px; height: 60px; border-radius: 50%; background: var(--grad);
   display: flex; align-items: center; justify-content: center; z-index: 40; box-shadow: 0 14px 30px -8px rgba(232,103,43,.6); }
-.chat::before { content: ""; width: 26px; height: 18px; border: 2px solid #17171a; border-radius: 6px; }
-.chat::after { content: ""; position: absolute; top: 2px; right: 2px; width: 14px; height: 14px; border-radius: 50%; background: var(--red); border: 2px solid #fff; }
+.chat::before { content: ""; width: 30px; height: 30px; background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A2.5 2.5 0 0 1 4 13.5z' fill='%2317171a'/%3E%3Ccircle cx='8.5' cy='9.5' r='1.3' fill='%23f5b21b'/%3E%3Ccircle cx='12' cy='9.5' r='1.3' fill='%23f5b21b'/%3E%3Ccircle cx='15.5' cy='9.5' r='1.3' fill='%23f5b21b'/%3E%3C/svg%3E"); }
 
 /* cabinets dropdown */
 .dd { position: relative; padding-bottom: 12px; margin-bottom: -12px; }
@@ -314,6 +317,20 @@ button.btn:disabled { opacity: .6; cursor: wait; }
 .addr { font-size: 15px; line-height: 1.6; margin: 10px 0 4px; font-weight: 500; }
 .addr a { text-decoration: none; }
 .addr a:hover { color: var(--orange-deep); }
+/* contact page: round icon next to an address / phone line */
+.cline { display: flex; align-items: center; gap: 14px; }
+.cline .icon { margin: 0; flex: none; }
+.cline .addr { margin: 0; }
+.cinfo { padding: 8px 24px; }
+.crow { display: flex; align-items: center; gap: 16px; padding: 18px 0; text-decoration: none; color: inherit; }
+.crow + .crow { border-top: 1px solid var(--border); }
+.cico { flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--tint); border: 1px solid #f0dfb6; display: inline-flex; align-items: center; justify-content: center; color: var(--orange-deep); transition: background .25s ease, color .25s ease; }
+.cico svg { width: 22px; height: 22px; }
+.ctext { display: flex; flex-direction: column; gap: 3px; }
+.clabel { font-size: 12px; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); }
+.cval { font-size: 18px; font-weight: 600; line-height: 1.4; letter-spacing: -.1px; }
+.crow:hover .cico { background: var(--grad); color: #17171a; }
+.crow:hover .cval { color: var(--orange-deep); }
 
 /* real map */
 .mapwrap { border-radius: var(--r); overflow: hidden; border: 1px solid var(--border); min-height: 340px; background: var(--tint); }
@@ -345,3 +362,17 @@ footer .logo img { height: 104px; }
 .seg button:hover { color: var(--text); }
 .seg button.on { background: var(--grad); color: #17171a; box-shadow: 0 6px 16px -8px rgba(232,103,43,.7); }
 .ph { display: inline-block; width: 80px; height: 10px; border-radius: 5px; background: #e6e2d9; vertical-align: middle; }
+
+/* baseboards: photo gallery (replaces the 3D viewer) */
+.viewer-ph.photo { background-color: #111; }
+.colorgrid .card .img.pf { background-size: contain; background-color: #1c1c20; }
+/* side-profile thumbnails under the main photo (C567, C655) */
+.sidethumbs { display: flex; gap: 12px; margin-top: 14px; }
+.sidethumbs:empty { display: none; }
+.sidethumbs .img { width: 84px; min-height: 0; aspect-ratio: 3 / 4; flex: none; cursor: pointer; border-radius: 12px; background-size: cover; transition: transform .3s ease, box-shadow .3s ease; }
+.sidethumbs .img:hover { transform: translateY(-2px); }
+.sidethumbs .img.on { box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--orange); }
+/* out-of-stock baseboards */
+.oos-tag { position: absolute; top: 10px; left: 10px; background: var(--red); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
+.oos-note { display: inline-block; background: var(--red); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; margin-bottom: 10px; }
+.oos-note[hidden] { display: none; }
