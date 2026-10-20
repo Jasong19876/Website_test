@@ -182,7 +182,6 @@
     });
     drop.forEach(function (o) { if (o.parent) o.parent.remove(o); });
   }
-  function loadModel(code) {
   /* one .dae can hold several cabinets laid out side by side (B_Cab.dae); a model entry then names the node to show */
   var masters = {};
   function getMaster(url) {
