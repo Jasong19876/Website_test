@@ -13,7 +13,7 @@ var SIZE_BY_TOPIC = {
 };
 
 (function () {
-  var ENDPOINT = 'https://formsubmit.co/ajax/royalbuildingoutlets@gmail.com';   // messages go to the company inbox
+  var ENDPOINT = 'https://formsubmit.co/ajax/4742b4d9d8a957973925b75795bfdc4d';   // messages go to the company inbox
 
   document.querySelectorAll('form[data-contact]').forEach(function (form) {
     var status = form.querySelector('.form-status');
