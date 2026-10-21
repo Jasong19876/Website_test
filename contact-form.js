@@ -37,6 +37,8 @@ var SIZE_BY_TOPIC = {
         if (info && info.unit && /^[\d.,\s]+$/.test(data.size_needed)) data.size_needed = data.size_needed.trim() + ' ' + info.unit;
       }
       if (!data.size_needed) delete data.size_needed;
+      // unique subject per lead so Gmail does not stack them in one conversation
+      data._subject = 'New message from the website: ' + (data.name || 'Customer') + (data.interested_in ? ' - ' + data.interested_in : '');
 
       btn.disabled = true; btn.textContent = 'Sending…'; say('');
       fetch(ENDPOINT, {
