@@ -378,5 +378,29 @@ footer .logo img { height: 104px; }
 .oos-note[hidden] { display: none; }
 .bb-style { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
 /* wall panels: photo thumbnails under the large photo */
-.wpthumbs .img { width: 96px; aspect-ratio: 4 / 3; background-size: cover; }
+.wpthumbs { flex-wrap: wrap; }
+.wpthumbs .img { width: 84px; aspect-ratio: 4 / 3; background-size: cover; }
 .img.photo.fit { background-size: contain; background-color: #fff; }
+/* footer contact + hours */
+footer .fcol { font-size: 14px; line-height: 1.6; margin-bottom: 14px; }
+footer .fcol h4 { margin: 0 0 8px; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); }
+footer .fcol a { display: block; color: #fff; text-decoration: none; margin-bottom: 6px; overflow-wrap: anywhere; }
+footer .fcol a:hover { color: var(--gold); }
+footer .hrs { display: flex; justify-content: space-between; gap: 18px; max-width: 260px; color: #d8d8dc; }
+footer .hrs span:last-child { color: #fff; }
+/* footer spacing */
+footer { padding: 60px 0 52px; }
+footer .grid.g3 { grid-template-columns: 1.1fr 1fr 1fr; gap: 56px; align-items: start; }
+footer .fcol { margin-bottom: 0; }
+footer .fcol h4 { margin-bottom: 14px; }
+footer .fcol a { margin-bottom: 12px; }
+footer .fcol a:last-child { margin-bottom: 0; }
+footer .hrs { max-width: 300px; padding: 7px 0; border-bottom: 1px solid #2a2a30; }
+footer .hrs:last-child { border-bottom: 0; }
+footer .social { margin-top: 22px; }
+@media (max-width: 760px) {
+  footer { padding: 44px 0 40px; }
+  footer .grid.g3 { grid-template-columns: 1fr; gap: 36px; }
+  footer .hrs { max-width: none; }
+}
+.cval.cmail { font-size: 16px; overflow-wrap: anywhere; }
