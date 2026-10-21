@@ -53,7 +53,10 @@
   <!-- selected color: image left, name + description right -->
   <section>
     <div class="colorfeat">
-      <div class="img" id="featimg" style="min-height:400px" data-img="Large photo: color 1 wall panel on a finished wall"></div>
+      <div>
+        <div class="img" id="featimg" style="min-height:400px" data-img="Large photo: color 1 wall panel on a finished wall"></div>
+        <div class="sidethumbs wpthumbs" id="wpthumbs"></div>
+      </div>
       <div class="info">
         <span class="tag solid" id="wpTag">Acoustic</span>
         <div class="line b"></div>
@@ -102,6 +105,14 @@
   function specs(rows) { return rows.map(function (r) { return '<div class="r"><span>' + r[0] + '</span><span>' + r[1] + '</span></div>'; }).join(''); }
   function badges(list) { return list.map(function (b) { return '<span class="badge">' + b + '</span>'; }).join(''); }
   /* Shower panel specs, badges and photos are placeholders until the real product details are added. */
+  /* Wall panel photos: images/Wall_Panels/web/<n>-<view>.jpg, one set per colour (n follows the colour order below).
+     Shower panel photos are placeholders until those photos are added. */
+  var DIR = 'images/Wall_Panels/web/', FILES = [2, 4, 5, 6, 7, 8, 10], VIEWS = ['room', 'angle-1', 'angle-2', 'detail'];
+  var shot = 0;
+  function pic(el, file) {
+    el.style.backgroundImage = file ? 'url("' + DIR + file + '.jpg")' : '';
+    el.classList.toggle('photo', !!file);
+  }
   var KINDS = {
     wall:   { banner: 'Wide banner: room with wall panels installed', photo: 'wall panel on a finished wall', tag: 'Acoustic', topic: 'Wall panels',
               specs: specs([['Length', '106.3"'], ['Width', '20.47"'], ['Thickness', '0.78"']]),
@@ -117,6 +128,20 @@
     var k = KINDS[kind];
     document.getElementById('banner').setAttribute('data-img', k.banner);
     img.setAttribute('data-img', 'Large photo: color ' + color + ' ' + k.photo);
+    // photos: wall panels only (shower panels are placeholders for now)
+    var wall = kind === 'wall', f = FILES[color - 1];
+    pic(document.getElementById('banner'), wall ? FILES[0] + '-room' : '');
+    pic(img, wall ? f + '-' + VIEWS[shot] : '');
+    img.classList.toggle('fit', wall && (shot === 1 || shot === 2));   // the white-background renders show whole, not cropped
+    cards.forEach(function (c) { pic(c.querySelector('.img'), wall ? FILES[+c.dataset.i - 1] + '-swatch' : ''); });
+    var th = document.getElementById('wpthumbs'); th.innerHTML = '';
+    if (wall) VIEWS.forEach(function (v, i) {
+      var t = document.createElement('div');
+      t.className = 'img photo' + (i === shot ? ' on' : ''); t.style.backgroundImage = 'url("' + DIR + f + '-' + v + '.jpg")';
+      t.setAttribute('role', 'button'); t.setAttribute('aria-label', 'Photo ' + (i + 1));
+      t.addEventListener('click', function () { shot = i; render(); });
+      th.appendChild(t);
+    });
     document.getElementById('wpTag').textContent = k.tag;
     document.getElementById('wpSpecs').innerHTML = k.specs;
     document.getElementById('wpBadges').innerHTML = k.badges;
@@ -133,7 +158,7 @@
   });
   cards.forEach(function (c) {
     c.addEventListener('click', function () {
-      color = +c.dataset.i; render();
+      color = +c.dataset.i; shot = 0; render();
       img.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   });

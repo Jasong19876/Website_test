@@ -249,7 +249,7 @@ body.leaving { animation: none; opacity: 0; transition: opacity .22s ease; }
 header { transition: box-shadow .3s ease, background .3s ease; }
 header.scrolled { box-shadow: 0 10px 30px -18px rgba(60,40,10,.35); }
 
-.img.hero, .img.banner { background-size: 100% 140%; background-position: 50% calc(50% + var(--py, 0px)); }
+.img.hero, .img.banner { background-size: cover; background-position: 50% calc(50% + var(--py, 0px)); }   /* cover keeps the photo undistorted */
 
 .grid:not(.colorgrid) .card .img, .mini .img { transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .25s ease; }
 .grid:not(.colorgrid) .card:hover .img { transform: translateY(-5px); box-shadow: 0 18px 30px -18px rgba(60,40,10,.4); border-color: var(--gold); }
@@ -377,3 +377,6 @@ footer .logo img { height: 104px; }
 .oos-note { display: inline-block; background: var(--red); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; margin-bottom: 10px; }
 .oos-note[hidden] { display: none; }
 .bb-style { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
+/* wall panels: photo thumbnails under the large photo */
+.wpthumbs .img { width: 96px; aspect-ratio: 4 / 3; background-size: cover; }
+.img.photo.fit { background-size: contain; background-color: #fff; }
