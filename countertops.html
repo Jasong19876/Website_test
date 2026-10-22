@@ -56,6 +56,7 @@
       <div class="img" id="featimg" style="min-height:400px" data-img="Large photo: color 1 countertop in a kitchen"></div>
       <div class="info">
         <span class="tag solid">Quartz</span>
+        <h2 class="pfname" id="ctCode" style="font-size:22px;margin:10px 0 0">T2011</h2>
         <div class="line b"></div>
         <div class="feat-specs">
           <div class="r"><span>Material</span><span>Quartz</span></div>
@@ -72,18 +73,9 @@
   <!-- all colors -->
   <section>
     <div class="grid g4 colorgrid" id="colorgrid">
-      <div class="card on" data-i="1"><div class="img sq" data-img="Color 1: countertop slab sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="2"><div class="img sq" data-img="Color 2: countertop slab sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="3"><div class="img sq" data-img="Color 3: countertop slab sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="4"><div class="img sq" data-img="Color 4: countertop slab sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="5"><div class="img sq" data-img="Color 5: countertop slab sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="6"><div class="img sq" data-img="Color 6: countertop slab sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="7"><div class="img sq" data-img="Color 7: countertop slab sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="8"><div class="img sq" data-img="Color 8: countertop slab sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="9"><div class="img sq" data-img="Color 9: countertop slab sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="10"><div class="img sq" data-img="Color 10: countertop slab sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="11"><div class="img sq" data-img="Color 11: countertop slab sample"></div><div class="line b"></div></div>
-      <div class="card" data-i="12"><div class="img sq" data-img="Color 12: countertop slab sample"></div><div class="line b"></div></div>
+      <div class="card on" data-i="1"><div class="img sq" data-img="T2011: countertop slab sample"></div><div class="pfname">T2011</div></div>
+      <div class="card" data-i="2"><div class="img sq" data-img="T307: countertop slab sample"></div><div class="pfname">T307</div></div>
+      <div class="card" data-i="3"><div class="img sq" data-img="T392: countertop slab sample"></div><div class="pfname">T392</div></div>
     </div>
   </section>
 
@@ -102,6 +94,7 @@
   var img = document.getElementById('featimg');
   var buttons = document.querySelectorAll('#ctseg button');
   var kind = 'countertops', color = 1;
+  var CODES = ['T2011', 'T307', 'T392'];
   var KINDS = {
     countertops: { photo: 'countertop in a kitchen', size: '26" × 110"', label: 'Size', topic: 'Countertops', hint: 'Have your countertop measurements handy. It helps us estimate faster.' },
     islands:     { photo: 'island in a kitchen',     size: '36" × 110"<br>52" × 110"', label: 'Sizes', topic: 'Islands',     hint: 'Have your island measurements handy. It helps us estimate faster.' }
@@ -109,7 +102,8 @@
 
   function render() {
     var k = KINDS[kind];
-    img.setAttribute('data-img', 'Large photo: color ' + color + ' ' + k.photo);
+    img.setAttribute('data-img', 'Large photo: ' + CODES[color - 1] + ' ' + k.photo);
+    document.getElementById('ctCode').textContent = CODES[color - 1];
     var size = document.getElementById('ctSize');
     size.innerHTML = k.size;
     document.getElementById('ctSizeLabel').textContent = k.label;
