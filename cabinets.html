@@ -41,7 +41,7 @@
 </div></header>
 
 <div class="wrap">
-  <section><div class="img banner" data-img="Wide banner: full kitchen with cabinets"></div></section>
+  <section><div class="img banner photo" role="img" aria-label="Showroom kitchen with white shaker cabinets" style="min-height:0;aspect-ratio:2 / 1;background-image:url('images/Cabinets/banner.jpg')"></div></section>
   <section>
     <div class="typesel" id="typesel">
       <a class="pick" href="#" id="pick">Select type</a>
@@ -384,7 +384,7 @@
   document.querySelectorAll('.menu a').forEach(function (a) {
     a.addEventListener('click', function (e) {
       var h = a.getAttribute('href');
-      if (h.indexOf('#') < 0) return;
+      if (h.indexOf('#') < 0 || h.charAt(0) !== '#' && h.indexOf('cabinets.html') !== 0) return;   // links to other pages (e.g. countertops.html#islands) navigate normally
       e.preventDefault();
       var slug = h.slice(h.indexOf('#') + 1);
       history.replaceState(null, '', '#' + slug);

@@ -46,10 +46,10 @@
   <!-- selected color: image left, name + description right -->
   <section>
     <div class="colorfeat">
-      <div class="img" id="featimg" style="min-height:440px" data-img="Large photo: color 1 vinyl plank in a room"></div>
+      <div><div class="img" id="featimg" style="min-height:0;aspect-ratio:3/4" data-img="Large photo: color 1 vinyl plank in a room"></div><div class="thumbs" id="flthumbs" style="grid-template-columns:repeat(2,minmax(0,110px))"></div></div>
       <div class="info">
         <span class="tag solid">8mm</span>
-        <div class="bb-code" id="colorName" style="margin-top:14px">7017-12</div>
+        <div class="bb-code" id="colorName" style="margin-top:14px">R51</div>
         <div class="feat-specs">
           <div class="r"><span>Thickness</span><span>8mm</span></div>
           <div class="r"><span>Wear layer</span><span>20 mil</span></div>
@@ -67,17 +67,23 @@
   <!-- all colors -->
   <section>
     <div class="grid g4 colorgrid" id="colorgrid">
-      <div class="card on" data-i="1" data-name="7017-12"><div class="img sq" data-img="7017-12: vinyl plank sample"></div><div class="pfname">7017-12</div></div>
-      <div class="card" data-i="2" data-name="7017-5"><div class="img sq" data-img="7017-5: vinyl plank sample"></div><div class="pfname">7017-5</div></div>
-      <div class="card" data-i="3" data-name="R51"><div class="img sq" data-img="R51: vinyl plank sample"></div><div class="pfname">R51</div></div>
-      <div class="card" data-i="4" data-name="R52"><div class="img sq" data-img="R52: vinyl plank sample"></div><div class="pfname">R52</div></div>
-      <div class="card" data-i="5" data-name="R53"><div class="img sq" data-img="R53: vinyl plank sample"></div><div class="pfname">R53</div></div>
-      <div class="card" data-i="6" data-name="R54"><div class="img sq" data-img="R54: vinyl plank sample"></div><div class="pfname">R54</div></div>
-      <div class="card" data-i="7" data-name="R55"><div class="img sq" data-img="R55: vinyl plank sample"></div><div class="pfname">R55</div></div>
-      <div class="card" data-i="8" data-name="R56"><div class="img sq" data-img="R56: vinyl plank sample"></div><div class="pfname">R56</div></div>
-      <div class="card" data-i="9" data-name="R57"><div class="img sq" data-img="R57: vinyl plank sample"></div><div class="pfname">R57</div></div>
-      <div class="card" data-i="10" data-name="R58"><div class="img sq" data-img="R58: vinyl plank sample"></div><div class="pfname">R58</div></div>
-      <div class="card" data-i="11" data-name="R59"><div class="img sq" data-img="R59: vinyl plank sample"></div><div class="pfname">R59</div></div>
+      <div class="card on" data-i="1" data-name="R51"><div class="img sq" data-img="R51: vinyl sample"></div><div class="pfname">R51</div></div>
+      <div class="card" data-i="2" data-name="R52"><div class="img sq" data-img="R52: vinyl sample"></div><div class="pfname">R52</div></div>
+      <div class="card" data-i="3" data-name="R53"><div class="img sq" data-img="R53: vinyl sample"></div><div class="pfname">R53</div></div>
+      <div class="card" data-i="4" data-name="R54"><div class="img sq" data-img="R54: vinyl sample"></div><div class="pfname">R54</div></div>
+      <div class="card" data-i="5" data-name="R55"><div class="img sq" data-img="R55: vinyl sample"></div><div class="pfname">R55</div></div>
+      <div class="card" data-i="6" data-name="R56"><div class="img sq" data-img="R56: vinyl sample"></div><div class="pfname">R56</div></div>
+      <div class="card" data-i="7" data-name="R57"><div class="img sq" data-img="R57: vinyl sample"></div><div class="pfname">R57</div></div>
+      <div class="card" data-i="8" data-name="R58"><div class="img sq" data-img="R58: vinyl sample"></div><div class="pfname">R58</div></div>
+      <div class="card" data-i="9" data-name="R59"><div class="img sq" data-img="R59: vinyl sample"></div><div class="pfname">R59</div></div>
+      <div class="card" data-i="10" data-name="R95"><div class="img sq" data-img="R95: vinyl sample"></div><div class="pfname">R95</div></div>
+      <div class="card" data-i="11" data-name="R96"><div class="img sq" data-img="R96: vinyl sample"></div><div class="pfname">R96</div></div>
+      <div class="card" data-i="12" data-name="R97"><div class="img sq" data-img="R97: vinyl sample"></div><div class="pfname">R97</div></div>
+      <div class="card" data-i="13" data-name="R98"><div class="img sq" data-img="R98: vinyl sample"></div><div class="pfname">R98</div></div>
+      <div class="card" data-i="14" data-name="R99"><div class="img sq" data-img="R99: vinyl sample"></div><div class="pfname">R99</div></div>
+      <div class="card" data-i="15" data-name="R100"><div class="img sq" data-img="R100: vinyl sample"></div><div class="pfname">R100</div></div>
+      <div class="card" data-i="16" data-name="7017-12"><div class="img sq" data-img="7017-12: vinyl sample"></div><div class="pfname">7017-12</div></div>
+      <div class="card" data-i="17" data-name="7017-5"><div class="img sq" data-img="7017-5: vinyl sample"></div><div class="pfname">7017-5</div></div>
     </div>
   </section>
 
@@ -98,11 +104,36 @@
   var img = document.getElementById('featimg');
   var nameEl = document.getElementById('colorName');
   var estimate = document.getElementById('estimate');
+  /* photos: images/Flooring/web/<code>.jpg; colours without one keep the placeholder */
+  var PHOTOS = { 'R51':1,'R52':1,'R53':1,'R54':1,'R55':1,'R56':1,'R57':1,'R58':1,'R59':1,'R95':1,'R96':1,'R97':1,'R98':1,'R99':1,'R100':1,'7017-12':1,'7017-5':1 };
+  function pic(el, name, n) {
+    var has = PHOTOS[name];
+    el.style.backgroundImage = has ? 'url("images/Flooring/web/' + name + (n ? '-' + n : '') + '.jpg")' : '';
+    el.classList.toggle('photo', !!has);
+  }
+
+  var cur = '', shot = 1;
+  /* each colour has two photos: <code>-1.jpg (overview) and <code>-2.jpg (close-up) */
+  function showShot() {
+    pic(img, cur, shot);
+    var th = document.getElementById('flthumbs'); th.innerHTML = '';
+    if (!PHOTOS[cur]) return;
+    [1, 2].forEach(function (n) {
+      var t = document.createElement('div');
+      t.className = 'img photo' + (n === shot ? ' on' : '');
+      t.style.backgroundImage = 'url("images/Flooring/web/' + cur + '-' + n + '.jpg")';
+      t.style.aspectRatio = '3 / 4';
+      t.setAttribute('role', 'button'); t.setAttribute('aria-label', 'Photo ' + n);
+      t.addEventListener('click', function () { shot = n; showShot(); });
+      th.appendChild(t);
+    });
+  }
 
   function pick(c) {
     var name = c.dataset.name;
     cards.forEach(function (x) { x.classList.toggle('on', x === c); });
     nameEl.textContent = name;
+    cur = name; shot = 1; showShot();
     img.setAttribute('data-img', 'Large photo: ' + name + ' vinyl plank in a room');
     estimate.href = 'contact.html?topic=Vinyl%20flooring&item=' + encodeURIComponent(name);
   }
@@ -112,6 +143,7 @@
       img.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   });
+  cards.forEach(function (c) { pic(c.querySelector('.img'), c.dataset.name); });
   pick(cards[0]);
 })();
 </script>

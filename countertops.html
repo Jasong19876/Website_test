@@ -41,9 +41,9 @@
 </div></header>
 
 <div class="wrap">
-  <section><div class="img banner" data-img="Wide banner: kitchen island countertop"></div></section>
 
   <section style="margin-bottom:0">
+    <h1 class="sec-title" id="ctTitle">Countertops</h1>
     <div class="seg" id="ctseg" role="tablist" aria-label="Countertops or islands">
       <button type="button" class="on" data-kind="countertops" role="tab" aria-selected="true">Countertops</button>
       <button type="button" data-kind="islands" role="tab" aria-selected="false">Islands</button>
@@ -57,7 +57,6 @@
       <div class="info">
         <span class="tag solid">Quartz</span>
         <h2 class="pfname" id="ctCode" style="font-size:22px;margin:10px 0 0">T2011</h2>
-        <div class="line b"></div>
         <div class="feat-specs">
           <div class="r"><span>Material</span><span>Quartz</span></div>
           <div class="r"><span id="ctSizeLabel">Size</span><span id="ctSize">26" &times; 110"</span></div>
@@ -76,6 +75,9 @@
       <div class="card on" data-i="1"><div class="img sq" data-img="T2011: countertop slab sample"></div><div class="pfname">T2011</div></div>
       <div class="card" data-i="2"><div class="img sq" data-img="T307: countertop slab sample"></div><div class="pfname">T307</div></div>
       <div class="card" data-i="3"><div class="img sq" data-img="T392: countertop slab sample"></div><div class="pfname">T392</div></div>
+      <div class="card soon"><div class="img sq"><span class="soon-tag">Coming soon</span></div><div class="pfname">New color</div></div>
+      <div class="card soon"><div class="img sq"><span class="soon-tag">Coming soon</span></div><div class="pfname">New color</div></div>
+      <div class="card soon"><div class="img sq"><span class="soon-tag">Coming soon</span></div><div class="pfname">New color</div></div>
     </div>
   </section>
 
@@ -90,11 +92,23 @@
 
 <script>
 (function () {
-  var cards = document.querySelectorAll('#colorgrid .card');
+  var cards = document.querySelectorAll('#colorgrid .card:not(.soon)');
   var img = document.getElementById('featimg');
   var buttons = document.querySelectorAll('#ctseg button');
   var kind = 'countertops', color = 1;
-  var CODES = ['T2011', 'T307', 'T392'];
+  var CODES = ['T2011', 'T307', 'T392'];   // countertops and islands come in the same colours
+  var OOS36 = ['T2011', 'T307'];                           // colours whose 36" island is out of stock
+  /* photos: images/Countertops/web/<code>.jpg; colours without one keep the placeholder */
+  var PHOTOS = { T2011: 1, T307: 1, T392: 1 };
+  function pic(el, code) {
+    var has = PHOTOS[code];
+    el.style.backgroundImage = has ? 'url("images/Countertops/web/' + code + '.jpg")' : '';
+    el.classList.toggle('photo', !!has);
+  }
+  function islandSizes(code) {
+    var out = OOS36.indexOf(code) > -1;
+    return '36" × 110"' + (out ? ' <span class="oos-note" style="margin:0 0 0 8px">Out of stock</span>' : '') + '<br>52" × 110"';
+  }
   var KINDS = {
     countertops: { photo: 'countertop in a kitchen', size: '26" × 110"', label: 'Size', topic: 'Countertops', hint: 'Have your countertop measurements handy. It helps us estimate faster.' },
     islands:     { photo: 'island in a kitchen',     size: '36" × 110"<br>52" × 110"', label: 'Sizes', topic: 'Islands',     hint: 'Have your island measurements handy. It helps us estimate faster.' }
@@ -104,8 +118,10 @@
     var k = KINDS[kind];
     img.setAttribute('data-img', 'Large photo: ' + CODES[color - 1] + ' ' + k.photo);
     document.getElementById('ctCode').textContent = CODES[color - 1];
+    document.getElementById('ctTitle').textContent = kind === 'islands' ? 'Islands' : 'Countertops';
     var size = document.getElementById('ctSize');
-    size.innerHTML = k.size;
+    size.innerHTML = kind === 'islands' ? islandSizes(CODES[color - 1]) : k.size;
+    pic(img, CODES[color - 1]);
     document.getElementById('ctSizeLabel').textContent = k.label;
     document.getElementById('ctHint').textContent = k.hint;
     document.getElementById('estimate').href = 'contact.html?topic=' + encodeURIComponent(k.topic);
@@ -113,7 +129,17 @@
       var on = b.dataset.kind === kind;
       b.classList.toggle('on', on); b.setAttribute('aria-selected', on);
     });
-    cards.forEach(function (c) { c.classList.toggle('on', +c.dataset.i === color); });
+    cards.forEach(function (c) {
+      var code = CODES[+c.dataset.i - 1], box = c.querySelector('.img');
+      c.classList.toggle('on', +c.dataset.i === color);
+      pic(box, code);
+      var tag = box.querySelector('.oos-tag');
+      if (tag) tag.remove();
+      if (kind === 'islands' && OOS36.indexOf(code) > -1) {
+        tag = document.createElement('span'); tag.className = 'oos-tag'; tag.textContent = '36" out of stock';
+        box.appendChild(tag);
+      }
+    });
   }
   buttons.forEach(function (b) {
     b.addEventListener('click', function () { location.hash = b.dataset.kind; });   // the colour you picked stays selected
@@ -125,7 +151,10 @@
     });
   });
   /* the nav dropdown links here with #islands / #shower etc.; the switch sets the same hash */
-  function fromHash() { var h = location.hash.slice(1); if (KINDS[h]) kind = h; render(); }
+  function fromHash(e) {
+    var h = location.hash.slice(1); if (KINDS[h]) kind = h; render();
+    if (e && e.type === 'hashchange') document.getElementById('ctTitle').scrollIntoView({ behavior: 'smooth', block: 'start' });   // the dropdown was used on this page: bring the new view into sight
+  }
   window.addEventListener('hashchange', fromHash);
   fromHash();
 })();

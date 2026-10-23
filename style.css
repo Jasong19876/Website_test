@@ -373,8 +373,8 @@ footer .logo img { height: 104px; }
 .sidethumbs .img:hover { transform: translateY(-2px); }
 .sidethumbs .img.on { box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--orange); }
 /* out-of-stock baseboards */
-.oos-tag { position: absolute; top: 10px; left: 10px; background: var(--red); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
-.oos-note { display: inline-block; background: var(--red); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; margin-bottom: 10px; }
+.oos-tag { position: absolute; top: 10px; left: 10px; background: #fdeccf; color: #9a5b13; border: 1px solid #f3d29b; font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
+.oos-note { display: inline-block; background: #fdeccf; color: #9a5b13; border: 1px solid #f3d29b; font-size: 12px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; margin-bottom: 10px; }
 .oos-note[hidden] { display: none; }
 .bb-style { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
 /* wall panels: photo thumbnails under the large photo */
@@ -404,3 +404,8 @@ footer .social { margin-top: 22px; }
   footer .hrs { max-width: none; }
 }
 .cval.cmail { font-size: 16px; overflow-wrap: anywhere; }
+/* countertops: colours we have not added yet */
+.soon-tag { position: absolute; top: 10px; left: 10px; background: #6b6459; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; }
+.colorgrid .card.soon { cursor: default; opacity: .75; }
+.colorgrid .card.soon .img { background: repeating-linear-gradient(135deg, var(--surface2) 0 14px, var(--surface) 14px 28px); }
+.colorgrid .card.soon .img::after { display: none; }

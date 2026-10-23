@@ -78,13 +78,12 @@
   <section>
     <div class="grid g4 colorgrid" id="colorgrid">
       <div class="card on" data-i="1"><div class="img sq" data-img="Color 2: wall panel sample"></div><div class="pfname">DGM717</div><div class="pfsub">Color 2</div></div>
-      <div class="card" data-i="2"><div class="img sq" data-img="Color 4: wall panel sample"></div><div class="pfname">Color 4</div></div>
-      <div class="card" data-i="3"><div class="img sq" data-img="Color 5: wall panel sample"></div><div class="pfname">DGM239</div><div class="pfsub">Color 5</div></div>
-      <div class="card" data-i="4"><div class="img sq" data-img="Color 6: wall panel sample"></div><div class="pfname">DGM246</div><div class="pfsub">Color 6</div></div>
-      <div class="card" data-i="5"><div class="img sq" data-img="Color 7: wall panel sample"></div><div class="pfname">DGM501</div><div class="pfsub">Color 7</div></div>
-      <div class="card" data-i="6"><div class="img sq" data-img="Color 8: wall panel sample"></div><div class="pfname">DGM197</div><div class="pfsub">Color 8</div></div>
-      <div class="card" data-i="7"><div class="img sq" data-img="Color 10: wall panel sample"></div><div class="pfname">DGM53</div><div class="pfsub">Color 10</div></div>
-      <div class="card" data-i="8"><div class="img sq" data-img="DGM109: wall panel sample"></div><div class="pfname">DGM109</div></div>
+      <div class="card" data-i="2"><div class="img sq" data-img="Color 5: wall panel sample"></div><div class="pfname">DGM239</div><div class="pfsub">Color 5</div></div>
+      <div class="card" data-i="3"><div class="img sq" data-img="Color 6: wall panel sample"></div><div class="pfname">DGM246</div><div class="pfsub">Color 6</div></div>
+      <div class="card" data-i="4"><div class="img sq" data-img="Color 7: wall panel sample"></div><div class="pfname">DGM501</div><div class="pfsub">Color 7</div></div>
+      <div class="card" data-i="5"><div class="img sq" data-img="Color 8: wall panel sample"></div><div class="pfname">DGM197</div><div class="pfsub">Color 8</div></div>
+      <div class="card" data-i="6"><div class="img sq" data-img="Color 10: wall panel sample"></div><div class="pfname">DGM53</div><div class="pfsub">Color 10</div></div>
+      <div class="card" data-i="7"><div class="img sq" data-img="DGM109: wall panel sample"></div><div class="pfname">DGM109</div></div>
     </div>
   </section>
 
@@ -99,21 +98,22 @@
 
 <script>
 (function () {
-  var cards = document.querySelectorAll('#colorgrid .card');
+  var grid = document.getElementById('colorgrid'), cards = [];
   var img = document.getElementById('featimg');
   var buttons = document.querySelectorAll('#wpseg button');
   var kind = 'wall', color = 1;
   function specs(rows) { return rows.map(function (r) { return '<div class="r"><span>' + r[0] + '</span><span>' + r[1] + '</span></div>'; }).join(''); }
   function badges(list) { return list.map(function (b) { return '<span class="badge">' + b + '</span>'; }).join(''); }
-  /* Shower panel specs, badges and photos are placeholders until the real product details are added. */
+  /* Shower panel specs and badges are placeholders until the real product details are added. */
   /* Wall panel photos: images/Wall_Panels/web/<n>-<view>.jpg, one set per colour (n follows the colour order below).
-     Shower panel photos are placeholders until those photos are added. */
-  var DIR = 'images/Wall_Panels/web/', FILES = [2, 4, 5, 6, 7, 8, 10, 'DGM109'], VIEWS = ['room', 'angle-1', 'angle-2', 'swatch', 'detail'];   // 5 photos per colour
+     Shower panel photos: images/Shower_Panel/web/<n>.jpg (card) and <n>-full.jpg (large); they have no names yet. */
+  var DIR = 'images/Wall_Panels/web/', FILES = [2, 5, 6, 7, 8, 10, 'DGM109'], VIEWS = ['room', 'angle-1', 'angle-2', 'swatch', 'detail'];   // 5 photos per colour
   var SOLO = { 'DGM109': 'DGM109-photo' };   // colours with one photo only (not the 5-picture set)
-  var CODES = { 'DGM109': 'DGM109', 2: 'DGM717', 5: 'DGM239', 6: 'DGM246', 7: 'DGM501', 8: 'DGM197', 10: 'DGM53' };   // colour 4 has no code yet
+  var CODES = { 'DGM109': 'DGM109', 2: 'DGM717', 5: 'DGM239', 6: 'DGM246', 7: 'DGM501', 8: 'DGM197', 10: 'DGM53' };
+  var SDIR = 'images/Shower_Panel/web/', SHOWER = [1, 2, 3, 4, 5];   // unnamed for now
   var shot = 0;
-  function pic(el, file) {
-    el.style.backgroundImage = file ? 'url("' + DIR + file + '.jpg")' : '';
+  function pic(el, file, dir) {
+    el.style.backgroundImage = file ? 'url("' + (dir || DIR) + file + '.jpg")' : '';
     el.classList.toggle('photo', !!file);
   }
   var KINDS = {
@@ -129,20 +129,32 @@
 
   function render() {
     var k = KINDS[kind];
+    var wall = kind === 'wall', n = wall ? FILES.length : SHOWER.length;
+    if (color > n) color = 1;
     document.getElementById('banner').setAttribute('data-img', k.banner);
-    img.setAttribute('data-img', 'Large photo: color ' + FILES[color - 1] + ' ' + k.photo);
-    // photos: wall panels only (shower panels are placeholders for now)
-    var wall = kind === 'wall', f = FILES[color - 1];
-    pic(document.getElementById('banner'), wall ? FILES[0] + '-room' : '');
-    var solo = SOLO[f], views = solo ? [solo] : VIEWS.map(function (v) { return f + '-' + v; });
+    var f = wall ? FILES[color - 1] : color;
+    img.setAttribute('data-img', 'Large photo: color ' + f + ' ' + k.photo);
+    grid.innerHTML = '';
+    for (var i = 1; i <= n; i++) {
+      var c = document.createElement('div'), code = wall ? FILES[i - 1] : i;
+      c.className = 'card'; c.dataset.i = i;
+      c.innerHTML = '<div class="img sq"></div>' + (wall ? '<div class="pfname">' + (CODES[code] || 'Color ' + code) + '</div>' + (SOLO[code] ? '' : '<div class="pfsub">Color ' + code + '</div>') : '');
+      grid.appendChild(c);
+    }
+    cards = grid.querySelectorAll('.card');
+    var views, dir = wall ? DIR : SDIR, solo = wall && SOLO[f];
+    if (wall) views = solo ? [solo] : VIEWS.map(function (v) { return f + '-' + v; });
+    else views = [f + '-full'];
     if (shot >= views.length) shot = 0;
-    pic(img, wall ? views[shot] : '');
+    document.getElementById('banner').parentNode.hidden = !wall;   // no wide banner for shower panels
+    pic(document.getElementById('banner'), wall ? FILES[0] + '-room' : '', dir);
+    pic(img, views[shot], dir);
     img.classList.toggle('fit', wall && !solo && /^angle/.test(VIEWS[shot]));   // the white-background renders show whole, not cropped
-    cards.forEach(function (c) { pic(c.querySelector('.img'), wall ? (SOLO[FILES[+c.dataset.i - 1]] || FILES[+c.dataset.i - 1] + '-swatch') : ''); });
+    cards.forEach(function (c) { var code = wall ? FILES[+c.dataset.i - 1] : c.dataset.i; pic(c.querySelector('.img'), wall ? (SOLO[code] || code + '-swatch') : code, dir); });
     var th = document.getElementById('wpthumbs'); th.innerHTML = '';
-    if (wall && views.length > 1) views.forEach(function (v, i) {
+    if (views.length > 1) views.forEach(function (v, i) {
       var t = document.createElement('div');
-      t.className = 'img photo' + (i === shot ? ' on' : ''); t.style.backgroundImage = 'url("' + DIR + v + '.jpg")';
+      t.className = 'img photo' + (i === shot ? ' on' : ''); t.style.backgroundImage = 'url("' + dir + v + '.jpg")';
       t.setAttribute('role', 'button'); t.setAttribute('aria-label', 'Photo ' + (i + 1));
       t.addEventListener('click', function () { shot = i; render(); });
       th.appendChild(t);
@@ -152,7 +164,7 @@
     document.getElementById('wpBadges').innerHTML = k.badges;
     document.getElementById('wpHint').textContent = k.hint;
     var nm = document.getElementById('wpName');
-    nm.className = wall ? 'bb-code' : 'line b'; nm.textContent = wall ? (CODES[f] || 'Color ' + f) : '';
+    nm.hidden = !wall; nm.className = 'bb-code'; nm.textContent = wall ? (CODES[f] || 'Color ' + f) : '';
     document.getElementById('estimate').href = 'contact.html?topic=' + encodeURIComponent(k.topic) + (wall ? '&item=' + encodeURIComponent(solo ? CODES[f] : CODES[f] ? CODES[f] + ' (color ' + f + ')' : 'color ' + f) : '');
     buttons.forEach(function (b) {
       var on = b.dataset.kind === kind;
@@ -163,11 +175,10 @@
   buttons.forEach(function (b) {
     b.addEventListener('click', function () { location.hash = b.dataset.kind; });
   });
-  cards.forEach(function (c) {
-    c.addEventListener('click', function () {
-      color = +c.dataset.i; shot = 0; render();
-      img.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    });
+  grid.addEventListener('click', function (e) {
+    var c = e.target.closest('.card'); if (!c) return;
+    color = +c.dataset.i; shot = 0; render();
+    img.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
   /* the nav dropdown links here with #islands / #shower etc.; the switch sets the same hash */
   function fromHash() { var h = location.hash.slice(1); if (KINDS[h]) kind = h; render(); }
