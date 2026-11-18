@@ -421,3 +421,12 @@ footer .social { margin-top: 22px; }
 .gal-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
 .gal-dots button { width: 9px; height: 9px; padding: 0; border-radius: 50%; border: 0; background: var(--border); cursor: pointer; }
 .gal-dots button.on { background: var(--orange); }
+/* vinyl price: block in the product panel, sticker on the home page photo */
+.price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 16px 0 4px; padding: 14px 18px; border-radius: 14px; background: var(--tint); border: 1px solid rgba(245,178,27,.45); }
+.price .amt { font-size: 38px; font-weight: 700; line-height: 1; letter-spacing: -.5px; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.price .per { font-size: 15px; font-weight: 600; color: var(--text); }
+.price .note { flex-basis: 100%; font-size: 13px; color: var(--muted); }
+.price-sticker { position: absolute; top: 18px; left: 18px; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 112px; height: 112px; border-radius: 50%; background: var(--grad); color: #17171a; box-shadow: 0 12px 26px -10px rgba(194,77,20,.55); transform: rotate(-8deg); text-align: center; }
+.price-sticker .amt { font-size: 28px; font-weight: 700; line-height: 1; }
+.price-sticker .per { font-size: 12px; font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: .6px; }
+@media (max-width: 760px) { .price-sticker { width: 88px; height: 88px; top: 12px; left: 12px; } .price-sticker .amt { font-size: 22px; } .price .amt { font-size: 32px; } }
