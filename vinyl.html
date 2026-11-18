@@ -145,7 +145,15 @@
     });
   });
   cards.forEach(function (c) { pic(c.querySelector('.img'), c.dataset.name); });
-  pick(cards[0]);
+  /* the home page links to a colour with #<code>, e.g. vinyl.html#R57 */
+  function fromHash() {
+    var want = decodeURIComponent(location.hash.slice(1)), hit = null;
+    cards.forEach(function (c) { if (c.dataset.name === want) hit = c; });
+    pick(hit || cards[0]);
+    if (hit) img.scrollIntoView({ block: 'center' });
+  }
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
 })();
 </script>
 <script src="motion.js"></script>
