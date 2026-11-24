@@ -9,7 +9,7 @@
   document.body.appendChild(bar);
 
   /* ---------- scroll-linked: header shadow, progress bar, parallax ---------- */
-  var layers = Array.prototype.slice.call(document.querySelectorAll('.img.hero, .img.banner'));
+  var layers = Array.prototype.slice.call(document.querySelectorAll('.img.hero, .img.banner, .home-hero, .page-hero'));
   var ticking = false;
   function onScroll() {
     var y = window.pageYOffset, max = document.documentElement.scrollHeight - window.innerHeight;
