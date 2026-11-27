@@ -49,7 +49,7 @@
       </div>
     </div>
     <a href="about.html">About</a>
-    <a href="locations.html">Locations</a>
+    <a href="locations.html">Location</a>
     <a href="contact.html">Contact</a>
     <div class="nav-foot">
       <a class="btn solid txt" href="tel:+12096189999"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Call 209-618-9999</a>
@@ -82,6 +82,7 @@
       </div>
       <div class="info">
         <span class="tag solid" id="wpTag">Acoustic</span>
+        <div class="oos-note" id="wpStock" hidden style="margin:14px 0 0">Out of stock</div>
         <div class="line b" id="wpName"></div>
         <div class="feat-specs" id="wpSpecs">
           <div class="r"><span>Length</span><span>106.3"</span></div>
@@ -98,15 +99,8 @@
   <!-- all colors -->
   <section id="colors">
     <div class="sec-head"><h2 id="wpGridTitle">All finishes</h2><p>Pick one to see more photos.</p></div>
-    <div class="grid g4 colorgrid" id="colorgrid">
-      <div class="card on" data-i="1"><div class="img sq" data-img="DGM717: wall panel sample"></div><div class="pfname">DGM717</div></div>
-      <div class="card" data-i="2"><div class="img sq" data-img="DGM239: wall panel sample"></div><div class="pfname">DGM239</div></div>
-      <div class="card" data-i="3"><div class="img sq" data-img="DGM246: wall panel sample"></div><div class="pfname">DGM246</div></div>
-      <div class="card" data-i="4"><div class="img sq" data-img="DGM501: wall panel sample"></div><div class="pfname">DGM501</div></div>
-      <div class="card" data-i="5"><div class="img sq" data-img="DGM197: wall panel sample"></div><div class="pfname">DGM197</div></div>
-      <div class="card" data-i="6"><div class="img sq" data-img="DGM53: wall panel sample"></div><div class="pfname">DGM53</div></div>
-      <div class="card" data-i="7"><div class="img sq" data-img="DGM109: wall panel sample"></div><div class="pfname">DGM109</div></div>
-    </div>
+    <div class="grid g4 colorgrid" id="colorgrid"></div>
+    <p class="grid-note" data-products-error hidden></p>
   </section>
 
   <section class="cta-band" style="--cta-img:url('images/Wall_Panels/web/5-room.jpg')">
@@ -124,97 +118,86 @@
     <div class="fcol"><h4>Contact</h4><a href="https://www.google.com/maps/search/?api=1&amp;query=2170+Wardrobe+Ave+Merced+CA+95341" target="_blank" rel="noopener">2170 Wardrobe Ave<br>Merced, CA 95341</a><a href="tel:+12096189999">209-618-9999</a><a href="mailto:royalbuildingoutlets@gmail.com">royalbuildingoutlets@gmail.com</a></div>
     <div class="fcol"><h4>Hours</h4><div class="hrs"><span>Mon&ndash;Fri</span><span>8:30 AM &ndash; 5 PM</span></div><div class="hrs"><span>Saturday</span><span>9 AM &ndash; 2 PM</span></div><div class="hrs"><span>Sunday</span><span>Closed</span></div></div>
   </div>
-  <div class="fbottom"><span>&copy; <span data-year>2026</span> Royal Building Outlets Inc. &middot; Room photos courtesy of our suppliers.</span><span class="flinks"><a href="about.html">About</a><a href="locations.html">Locations</a><a href="contact.html">Contact</a></span></div>
+  <div class="fbottom"><span>&copy; <span data-year>2026</span> Royal Building Outlets Inc. &middot; Room photos courtesy of our suppliers.</span><span class="flinks"><a href="about.html">About</a><a href="locations.html">Location</a><a href="contact.html">Contact</a></span></div>
 </div></footer>
 <a class="chat" href="mailto:royalbuildingoutlets@gmail.com" aria-label="Email us at royalbuildingoutlets@gmail.com" title="Email us"></a>
 
+<script src="products.js?v=20261127"></script>
 <script>
-(function () {
+loadProducts(function (P) {
+  /* the panels, their photos and their stock come from products.txt */
+  var WALL = P ? P.wallPanels : [], SHOWER = P ? P.showerPanels : [];
   var grid = document.getElementById('colorgrid'), cards = [];
   var img = document.getElementById('featimg');
   var buttons = document.querySelectorAll('#wpseg button');
-  var kind = 'wall', color = 1;
+  var kind = 'wall', color = 0, shot = 0;
   function specs(rows) { return rows.map(function (r) { return '<div class="r"><span>' + r[0] + '</span><span>' + r[1] + '</span></div>'; }).join(''); }
   function badges(list) { return list.map(function (b) { return '<span class="badge">' + b + '</span>'; }).join(''); }
-  /* Shower panel specs and badges are placeholders until the real product details are added. */
-  /* Wall panel photos: images/Wall_Panels/web/<n>-<view>.jpg, one set per colour (n follows the colour order below).
-     Shower panel photos: images/Shower_Panel/web/<n>.jpg (card) and <n>-full.jpg (large); they have no names yet. */
-  var DIR = 'images/Wall_Panels/web/', FILES = [2, 5, 6, 7, 8, 10, 'DGM109'], VIEWS = ['room', 'angle-1', 'angle-2', 'swatch', 'detail'];   // 5 photos per colour
-  var SOLO = { 'DGM109': 'DGM109-photo' };   // colours with one photo only (not the 5-picture set)
-  var CODES = { 'DGM109': 'DGM109', 2: 'DGM717', 5: 'DGM239', 6: 'DGM246', 7: 'DGM501', 8: 'DGM197', 10: 'DGM53' };
-  var SDIR = 'images/Shower_Panel/web/', SHOWER = [1, 2, 3, 4, 5];   // unnamed for now
-  var shot = 0;
-  function pic(el, file, dir) {
-    el.style.backgroundImage = file ? 'url("' + (dir || DIR) + file + '.jpg")' : '';
-    el.classList.toggle('photo', !!file);
-  }
   var KINDS = {
-    wall:   { banner: 'Wide banner: room with wall panels installed', photo: 'wall panel on a finished wall', tag: 'Acoustic', topic: 'Wall panels',
+    wall:   { dir: 'images/Wall_Panels/web/', list: WALL, photo: 'wall panel on a finished wall', tag: 'Acoustic', topic: 'Wall panels', grid: 'All finishes',
               specs: specs([['Length', '106.3"'], ['Width', '20.47"'], ['Thickness', '0.78"']]),
               badges: badges(['Reduces echoes and noise', 'Durable', 'Easy installation']),
-              hint: 'Have your wall measurements handy. It helps us estimate faster.' },
-    shower: { banner: 'Wide banner: shower with panels installed', photo: 'shower panel in a finished shower', tag: 'Shower', topic: 'Shower panels',
+              hint: 'Have your wall measurements handy. It helps us estimate faster.',
+              name: function (p) { return p.code; }, card: function (p) { return p.card; }, photos: function (p) { return p.photos; } },
+    shower: { dir: 'images/Shower_Panel/web/', list: SHOWER, photo: 'shower panel in a finished shower', tag: 'Shower', topic: 'Shower panels', grid: 'All shower panels',
               specs: specs([['Height', '9 ft (108")'], ['Width', '4 ft (48")']]),
               badges: badges(['Waterproof', 'Easy to clean', 'Easy installation']),
-              hint: 'Have your shower wall measurements handy. It helps us estimate faster.' }
+              hint: 'Have your shower wall measurements handy. It helps us estimate faster.',
+              name: function (p) { return p.name; }, card: function (p) { return p.card; }, photos: function (p) { return [p.large]; } }
   };
+  if (!WALL.length && !SHOWER.length) return;
 
   function render() {
-    var k = KINDS[kind];
-    var wall = kind === 'wall', n = wall ? FILES.length : SHOWER.length;
-    if (color > n) color = 1;
-    var f = wall ? FILES[color - 1] : color;
-    img.setAttribute('data-img', 'Large photo: color ' + f + ' ' + k.photo);
-    grid.innerHTML = '';
-    for (var i = 1; i <= n; i++) {
-      var c = document.createElement('div'), code = wall ? FILES[i - 1] : i;
-      c.className = 'card'; c.dataset.i = i;
-      c.innerHTML = '<div class="img sq"></div>' + (wall ? '<div class="pfname">' + (CODES[code] || code) + '</div>' + '' : '');
-      grid.appendChild(c);
-    }
-    cards = grid.querySelectorAll('.card');
-    var views, dir = wall ? DIR : SDIR, solo = wall && SOLO[f];
-    if (wall) views = solo ? [solo] : VIEWS.map(function (v) { return f + '-' + v; });
-    else views = [f + '-full'];
+    var k = KINDS[kind], list = k.list;
+    if (!list.length) { grid.innerHTML = '<p class="grid-note">Coming soon.</p>'; return; }
+    if (color >= list.length) color = 0;
+    var p = list[color], views = k.photos(p), name = k.name(p);
     if (shot >= views.length) shot = 0;
-    pic(img, views[shot], dir);
-    img.classList.toggle('fit', wall && !solo && /^angle/.test(VIEWS[shot]));   // the white-background renders show whole, not cropped
-    cards.forEach(function (c) { var code = wall ? FILES[+c.dataset.i - 1] : c.dataset.i; pic(c.querySelector('.img'), wall ? (SOLO[code] || code + '-swatch') : code, dir); });
+
+    grid.innerHTML = '';
+    list.forEach(function (q, i) {
+      var c = document.createElement('div'), nm = k.name(q);
+      c.className = 'card' + (i === color ? ' on' : '') + (q.inStock ? '' : ' oos');
+      c.innerHTML = '<div class="img sq photo" role="img" aria-label="' + (nm || k.tag + ' panel ' + (i + 1)) + '" style="background-image:url(\'' + k.dir + k.card(q) + '.jpg\')">' +
+        (q.inStock ? '' : '<span class="oos-tag">Out of stock</span>') + '</div>' + (nm ? '<div class="pfname">' + nm + '</div>' : '');
+      c.addEventListener('click', function () { color = i; shot = 0; render(); img.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); });
+      grid.appendChild(c);
+    });
+    cards = grid.querySelectorAll('.card');
+
+    img.style.backgroundImage = 'url("' + k.dir + views[shot] + '.jpg")'; img.classList.add('photo');
+    img.setAttribute('data-img', 'Large photo: ' + (name || 'panel') + ' ' + k.photo);
+    img.classList.toggle('fit', /angle/.test(views[shot]));   // the white-background renders show whole, not cropped
     var th = document.getElementById('wpthumbs'); th.innerHTML = '';
     if (views.length > 1) views.forEach(function (v, i) {
       var t = document.createElement('div');
-      t.className = 'img photo' + (i === shot ? ' on' : ''); t.style.backgroundImage = 'url("' + dir + v + '.jpg")';
+      t.className = 'img photo' + (i === shot ? ' on' : ''); t.style.backgroundImage = 'url("' + k.dir + v + '.jpg")';
       t.setAttribute('role', 'button'); t.setAttribute('aria-label', 'Photo ' + (i + 1));
       t.addEventListener('click', function () { shot = i; render(); });
       th.appendChild(t);
     });
     document.getElementById('wpTag').textContent = k.tag;
+    document.getElementById('wpStock').hidden = p.inStock;
     document.getElementById('wpSpecs').innerHTML = k.specs;
     document.getElementById('wpBadges').innerHTML = k.badges;
     document.getElementById('wpHint').textContent = k.hint;
-    document.getElementById('wpGridTitle').textContent = wall ? 'All finishes' : 'All shower panels';
+    document.getElementById('wpGridTitle').textContent = k.grid;
     var nm = document.getElementById('wpName');
-    nm.hidden = !wall; nm.className = 'bb-code'; nm.textContent = wall ? (CODES[f] || f) : '';
-    document.getElementById('estimate').href = 'contact.html?topic=' + encodeURIComponent(k.topic) + (wall ? '&item=' + encodeURIComponent(solo ? CODES[f] : CODES[f] ? CODES[f] + ' (color ' + f + ')' : 'color ' + f) : '');
+    nm.className = 'bb-code'; nm.textContent = name || ''; nm.hidden = !name;
+    document.getElementById('estimate').href = 'contact.html?topic=' + encodeURIComponent(k.topic) + (name ? '&item=' + encodeURIComponent(name) : '');
     buttons.forEach(function (b) {
       var on = b.dataset.kind === kind;
       b.classList.toggle('on', on); b.setAttribute('aria-selected', on);
     });
-    cards.forEach(function (c) { c.classList.toggle('on', +c.dataset.i === color); });
   }
   buttons.forEach(function (b) {
     b.addEventListener('click', function () { location.hash = b.dataset.kind; });
   });
-  grid.addEventListener('click', function (e) {
-    var c = e.target.closest('.card'); if (!c) return;
-    color = +c.dataset.i; shot = 0; render();
-    img.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
-  /* the nav dropdown links here with #islands / #shower etc.; the switch sets the same hash */
-  function fromHash() { var h = location.hash.slice(1); if (KINDS[h]) kind = h; render(); }
+  /* the nav dropdown links here with #wall / #shower; the switch sets the same hash */
+  function fromHash() { var h = location.hash.slice(1); if (KINDS[h] && h !== kind) { kind = h; color = 0; shot = 0; } render(); }
   window.addEventListener('hashchange', fromHash);
   fromHash();
-})();
+});
 </script>
 <script src="site.js?v=20261124"></script>
 <script src="motion.js?v=20261124"></script>

@@ -1,0 +1,126 @@
+=====================================================================
+  ROYAL BUILDING OUTLETS - PRODUCT LIST
+  Every product page on the website reads this file.
+
+  HOW TO EDIT
+  - Each product is one line. Columns are separated by  |
+  - In stock: write  yes  or  no
+  - To remove a color: delete its whole line.
+  - To add a color: copy a line, change it, and upload its photos
+    (see "PHOTOS" under each section).
+  - The order of the lines is the order on the website.
+  - Lines starting with  #  are notes and are ignored.
+  - Changes show on the website 1-2 minutes after you save
+    ("Commit changes" on GitHub).
+=====================================================================
+
+
+[vinyl]
+# Code    | In stock
+# PHOTOS: 3 per color in images/Flooring/web/
+#   <code>.jpg     (small square for the color grid)
+#   <code>-1.jpg   (main photo)
+#   <code>-2.jpg   (second photo)
+R51       | yes
+R52       | yes
+R53       | yes
+R54       | yes
+R55       | yes
+R56       | yes
+R57       | yes
+R58       | yes
+R59       | yes
+R95       | yes
+R96       | yes
+R97       | yes
+R98       | yes
+R99       | yes
+R100      | yes
+7017-12   | yes
+7017-5    | yes
+
+
+[laminate]
+# Code    | In stock
+# PHOTOS: same as vinyl (images/Flooring/web/, 3 per color)
+RH01      | yes
+RH02      | yes
+RH03      | yes
+RH04      | yes
+RH05      | yes
+RH06      | yes
+RH07      | yes
+RH08      | yes
+RH09      | yes
+RH10      | yes
+RH11      | yes
+RH12      | yes
+RH13      | yes
+RH14      | yes
+RH15      | yes
+R83       | yes
+R84       | yes
+R85       | yes
+R86       | yes
+R82       | yes
+
+
+[countertops]
+# Code    | Countertop 26" in stock | Island 36" in stock | Island 52" in stock
+# PHOTOS: 1 per color in images/Countertops/web/<code>.jpg
+T2011     | yes | no  | yes
+T307      | yes | no  | yes
+T392      | yes | yes | yes
+
+
+[baseboards]
+# Code         | Name          | Thickness | Height  | Length | In stock | Extra side photos (optional)
+# Name: Square, Coronado or Sierra show as "Baseboard"; anything else
+#       (Crown Molding, Door Trim, Base Shoe, ...) shows as its own name.
+# Length: leave empty if it doesn't apply.
+# PHOTOS: images/Baseboard_02/crop/<code>.jpg
+#   Extra side photos: file names without .jpg, separated by commas.
+B50-12-314     | Square        | 1/2"      | 3-1/4"  | 16'    | yes
+B50-12-412     | Square        | 1/2"      | 4-1/2"  | 16'    | yes
+B50-12-512     | Square        | 1/2"      | 5-1/2"  | 16'    | yes
+C567-14-500    | Crown Molding | 9/16"     | 5"      | 16'    | yes | C567-14-500-side, C567-14-500-side-2
+B51-14-314     | Coronado      | 9/16"     | 3-1/4"  | 16'    | yes
+B51-14-414     | Coronado      | 9/16"     | 4-1/4"  | 16'    | yes
+B51-14-514     | Coronado      | 9/16"     | 5-1/4"  | 16'    | yes
+C655-14-600    | Crown Molding | 9/16"     | 6"      | 16'    | yes | C655-14-600-side-2, C655-14-600-side-3
+B13-12-400     | Sierra        | 1/2"      | 4"      | 16'    | yes
+B54-14-500     | Sierra        | 9/16"     | 5"      | 16'    | yes
+B33-14-212     | Square        | 9/16"     | 2-1/2"  | 17'    | no
+B54-14-378     | Sierra        | 9/16"     | 3-7/8"  | 16'    | yes
+B13-12-512     | Sierra        | 1/2"      | 5-1/2"  | 16'    | yes
+B98-11-2132    | Base Shoe     | 7/16"     | 21/32"  |        | yes
+B41-14-212     | Door Trim     | 9/16"     | 2-1/2"  | 17'    | yes
+B99-16-2132    | Quarter Round | 21/32"    | 21/32"  |        | yes
+
+
+[wall panels]
+# Code    | Grid photo | Photos (in order, separated by commas)                    | In stock
+# PHOTOS: in images/Wall_Panels/web/ - write file names without .jpg.
+#   A new panel can have just one photo, e.g.:  DGM900 | DGM900 | DGM900 | yes
+DGM717    | 2-swatch   | 2-room, 2-angle-1, 2-angle-2, 2-swatch, 2-detail           | yes
+DGM239    | 5-swatch   | 5-room, 5-angle-1, 5-angle-2, 5-swatch, 5-detail           | yes
+DGM246    | 6-swatch   | 6-room, 6-angle-1, 6-angle-2, 6-swatch, 6-detail           | yes
+DGM501    | 7-swatch   | 7-room, 7-angle-1, 7-angle-2, 7-swatch, 7-detail           | yes
+DGM197    | 8-swatch   | 8-room, 8-angle-1, 8-angle-2, 8-swatch, 8-detail           | yes
+DGM53     | 10-swatch  | 10-room, 10-angle-1, 10-angle-2, 10-swatch, 10-detail      | yes
+DGM109    | DGM109-photo | DGM109-photo                                             | yes
+
+
+[shower panels]
+# Name (optional) | Grid photo | Large photo | In stock
+# PHOTOS: in images/Shower_Panel/web/ - write file names without .jpg.
+                  | 1          | 1-full      | yes
+                  | 2          | 2-full      | yes
+                  | 3          | 3-full      | yes
+                  | 4          | 4-full      | yes
+                  | 5          | 5-full      | yes
+
+
+[cabinets out of stock]
+# One cabinet code per line, exactly as shown on the cabinets page (e.g. B12).
+# Leave this section empty when every cabinet is in stock.

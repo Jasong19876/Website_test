@@ -49,7 +49,7 @@
       </div>
     </div>
     <a href="about.html">About</a>
-    <a href="locations.html">Locations</a>
+    <a href="locations.html">Location</a>
     <a href="contact.html">Contact</a>
     <div class="nav-foot">
       <a class="btn solid txt" href="tel:+12096189999"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Call 209-618-9999</a>
@@ -93,6 +93,7 @@
         <div class="specs">
           <div class="spec-code" id="specCode"></div>
           <div class="spec-title" id="specTitle"></div>
+          <div class="oos-note" id="cabStock" hidden style="margin:8px 0 0">Out of stock</div>
           <div class="rows" id="specRows"></div>
           <div class="spec-cta"><a class="btn solid txt" id="cabEst" href="contact.html?topic=Cabinets">Get an estimate</a><p class="est-hint">List every cabinet code you need in your message.</p></div>
         </div>
@@ -115,10 +116,11 @@
     <div class="fcol"><h4>Contact</h4><a href="https://www.google.com/maps/search/?api=1&amp;query=2170+Wardrobe+Ave+Merced+CA+95341" target="_blank" rel="noopener">2170 Wardrobe Ave<br>Merced, CA 95341</a><a href="tel:+12096189999">209-618-9999</a><a href="mailto:royalbuildingoutlets@gmail.com">royalbuildingoutlets@gmail.com</a></div>
     <div class="fcol"><h4>Hours</h4><div class="hrs"><span>Mon&ndash;Fri</span><span>8:30 AM &ndash; 5 PM</span></div><div class="hrs"><span>Saturday</span><span>9 AM &ndash; 2 PM</span></div><div class="hrs"><span>Sunday</span><span>Closed</span></div></div>
   </div>
-  <div class="fbottom"><span>&copy; <span data-year>2026</span> Royal Building Outlets Inc. &middot; Room photos courtesy of our suppliers.</span><span class="flinks"><a href="about.html">About</a><a href="locations.html">Locations</a><a href="contact.html">Contact</a></span></div>
+  <div class="fbottom"><span>&copy; <span data-year>2026</span> Royal Building Outlets Inc. &middot; Room photos courtesy of our suppliers.</span><span class="flinks"><a href="about.html">About</a><a href="locations.html">Location</a><a href="contact.html">Contact</a></span></div>
 </div></footer>
 <a class="chat" href="mailto:royalbuildingoutlets@gmail.com" aria-label="Email us at royalbuildingoutlets@gmail.com" title="Email us"></a>
 
+<script src="products.js?v=20261127"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/ColladaLoader.js"></script>
@@ -139,6 +141,18 @@
   };
   var list = document.getElementById('cablist');
   var detail = document.getElementById('detail');
+  /* cabinets listed under [cabinets out of stock] in products.txt */
+  var OUT = {};
+  function markStock() {
+    list.querySelectorAll('.item').forEach(function (d) {
+      var out = !!OUT[d.dataset.code.toUpperCase()], tag = d.querySelector('.oos-note');
+      d.classList.toggle('oos', out);
+      if (out && !tag) d.querySelector('.name').insertAdjacentHTML('beforeend', ' <span class="oos-note">Out of stock</span>');
+      if (!out && tag) tag.remove();
+    });
+    document.getElementById('cabStock').hidden = !OUT[(document.getElementById('specCode').textContent || '').toUpperCase()];
+  }
+  if (window.loadProducts) loadProducts(function (P) { (P ? P.cabinetsOut : []).forEach(function (c) { OUT[c.toUpperCase()] = 1; }); markStock(); });
   var mark = document.getElementById('modelmark');
 
   /* ---------- 3D viewer ----------
@@ -372,6 +386,7 @@
       for (var i = 0; i < 3; i++) out += '<div class="r"><div class="line"></div><div class="line v"></div></div>';
     }
     rows.innerHTML = out;
+    markStock();
     document.getElementById('cabEst').href = 'contact.html?topic=Cabinets&item=' + encodeURIComponent(code);
   }
 
@@ -396,6 +411,7 @@
       list.appendChild(d);
     });
     showCab(CABS[slug][0]);
+    markStock();
   }
 
   function choose(slug) {

@@ -713,3 +713,7 @@ form .grid.g2 { gap: 0 24px; }
 #wpName:empty { display: none; }
 .info > .tag + .feat-specs, .info > .tag + .badges { margin-top: 18px; }
 .info .badges { margin-top: 18px; }
+
+/* out-of-stock labels set from products.txt */
+.cablist .item .oos-note { font-size: 10px; padding: 2px 6px; margin: 0 0 0 6px; vertical-align: middle; }
+.colorgrid .card.oos .img { filter: saturate(.75); }
